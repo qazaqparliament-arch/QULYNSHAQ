@@ -16,24 +16,9 @@
 <script src="../../_ds_bundle.js"></script>
 <style>
   body { margin: 0; }
-  .viewport-toggle {
-    position: fixed; top: 12px; right: 14px; z-index: 50;
-    display: flex; gap: 3px; background: var(--ink); padding: 4px; border-radius: var(--radius-pill);
-    box-shadow: var(--shadow-lg);
-  }
-  .viewport-toggle button {
-    border: none; background: transparent; color: var(--paper); cursor: pointer;
-    font: 700 13px var(--font-display); padding: 6px 14px; border-radius: var(--radius-pill);
-  }
-  .viewport-toggle button[data-on="true"] { background: var(--amber-400); color: var(--ink); }
-  .phone {
-    width: 390px; margin: 26px auto; background: var(--paper); border-radius: 40px;
-    border: 10px solid var(--ink); box-shadow: var(--shadow-xl); overflow: hidden;
-    height: 780px; position: relative;
-  }
-  .phone-scroll { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .mobile-content { padding-bottom: 66px; }
   .mobile-tabs {
-    position: sticky; bottom: 0; display: flex; background: var(--paper-hi);
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; display: flex; background: var(--paper-hi);
     border-top: 2px solid var(--line); padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
   }
   .mobile-tabs button {
@@ -54,7 +39,18 @@
 <script type="text/babel" src="LessonScreen.jsx"></script>
 <script type="text/babel" src="AssemblyScreen.jsx"></script>
 <script type="text/babel">
-  const { useState } = React;
+  const { useState, useEffect } = React;
+
+  function useIsMobile() {
+    const [mobile, setMobile] = useState(() => window.matchMedia('(max-width: 768px)').matches);
+    useEffect(() => {
+      const mq = window.matchMedia('(max-width: 768px)');
+      const onChange = (e) => setMobile(e.matches);
+      mq.addEventListener('change', onChange);
+      return () => mq.removeEventListener('change', onChange);
+    }, []);
+    return mobile;
+  }
 
   function Screens({ route, lesson, nav, open, mobile }) {
     switch (route) {
@@ -82,36 +78,17 @@
   function App() {
     const [route, setRoute] = useState('home');
     const [lesson, setLesson] = useState(null);
-    const [mobile, setMobile] = useState(false);
+    const mobile = useIsMobile();
 
-    const scrollTop = () => { const el = document.querySelector(mobile ? '.phone-scroll' : '#appscroll'); if (el) el.scrollTop = 0; else window.scrollTo(0, 0); };
+    const scrollTop = () => window.scrollTo(0, 0);
     const nav = (r) => { setRoute(r); setTimeout(scrollTop, 0); };
     const open = (l) => { setLesson(l); setRoute('lesson'); setTimeout(scrollTop, 0); };
 
-    const content = (
-      <>
+    return (
+      <div className={mobile ? 'mobile-content' : undefined}>
         <Header route={route} onNav={nav} mobile={mobile} />
         <Screens route={route} lesson={lesson} nav={nav} open={open} mobile={mobile} />
-        {!mobile && <Footer />}
-      </>
-    );
-
-    return (
-      <div>
-        <div className="viewport-toggle">
-          <button data-on={!mobile} onClick={() => setMobile(false)}>🖥 Desktop</button>
-          <button data-on={mobile} onClick={() => setMobile(true)}>📱 Mobile</button>
-        </div>
-        {mobile ? (
-          <div className="phone">
-            <div className="phone-scroll">
-              {content}
-              <MobileTabs route={route} nav={nav} />
-            </div>
-          </div>
-        ) : (
-          <div id="appscroll">{content}</div>
-        )}
+        {mobile ? <MobileTabs route={route} nav={nav} /> : <Footer />}
       </div>
     );
   }

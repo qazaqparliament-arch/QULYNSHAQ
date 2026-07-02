@@ -6,9 +6,9 @@ system's primitives (`Button`, `Card`, `Badge`, `Callout`, `ChessBoard`, `ChessP
 `Sticker`, `StepList`, form controls) — it does not re-implement them.
 
 ## Run it
-Open `index.html`. It loads the compiled `_ds_bundle.js` and the screen files. A **Desktop /
-Mobile** toggle (top-right) reframes the whole app into a 390px phone shell with a bottom tab
-bar, demonstrating the required mobile adaptation.
+Open `index.html` over http (it loads the compiled `_ds_bundle.js` and the screen files).
+The layout is responsive: below 768px the site switches to the mobile adaptation —
+compact header and a fixed bottom tab bar (`matchMedia`, no manual toggle).
 
 ## Screens
 - **HomeScreen.jsx** — hero (the box "opened like a board", built in CSS), what's-in-the-box,
