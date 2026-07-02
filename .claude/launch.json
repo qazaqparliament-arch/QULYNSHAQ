@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "qulynshaq-site",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd '/private/tmp/claude-501/-Users-niaz-Desktop-qulynshaq/9437273a-829a-4a21-8454-2abd71dba676/scratchpad/site-mirror' && exec python3 -m http.server \"$PORT\" --bind 127.0.0.1"],
+      "autoPort": true
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+/* Кулыншақ — Base layer
+   Minimal, opt-in helpers so specimen cards and kits inherit the brand feel.
+   Consumers get tokens for free; these element defaults apply when styles.css is linked. */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--body-lh);
+  color: var(--text);
+  background-color: var(--paper);
+  /* Subtle paper grain — very low contrast, warm */
+  background-image:
+    radial-gradient(rgba(122, 111, 99, 0.05) 1px, transparent 1px),
+    radial-gradient(rgba(122, 111, 99, 0.04) 1px, transparent 1px);
+  background-size: 22px 22px, 14px 14px;
+  background-position: 0 0, 7px 11px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--ink);
+  margin: 0 0 0.4em;
+}
+
+p { margin: 0 0 1em; text-wrap: pretty; }
+
+a { color: var(--teal-500); text-underline-offset: 3px; }
+
+/* Reusable eyebrow / label */
+.ku-eyebrow {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--text-xs);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--clay-500);
+}
+
+::selection { background: var(--amber-200); color: var(--ink); }

@@ -1,0 +1,79 @@
+/* Кулыншақ — Color tokens
+   A "steppe craft" palette: warm paper, chess ink, foal-amber, steppe-teal, ornament-clay.
+   The knight (♞ / «ат») is a horse; кулыншақ means "foal" — amber is the coat colour and
+   the brand's primary. Bright enough for kids, warm enough to feel handmade. */
+
+:root {
+  /* ---- Base neutrals: paper & ink ---- */
+  --paper:        #F5EEDD;   /* main background — warm cream paper */
+  --paper-deep:   #ECE1C8;   /* recessed sections, board light-square base */
+  --paper-hi:     #FCF8EF;   /* raised surfaces, "white" chalk */
+  --ink:          #211D1A;   /* primary text / chess black */
+  --ink-2:        #4A423B;   /* strong secondary text */
+  --ink-3:        #7A6F63;   /* muted text, captions */
+  --ink-4:        #A99C8B;   /* disabled, hairlines on paper */
+  --line:         #D8CBAE;   /* default border on paper */
+  --line-strong:  #221E1B;   /* printed / cut-line ink border */
+
+  /* ---- Foal amber (PRIMARY) ---- */
+  --amber-100: #FBEBC9;
+  --amber-200: #F4D08C;
+  --amber-400: #E7A13F;   /* primary */
+  --amber-500: #D98A3D;
+  --amber-600: #B9772A;   /* pressed / chunky bottom edge */
+  --amber-700: #8F5A1E;
+
+  /* ---- Steppe teal (SECONDARY) ---- */
+  --teal-100: #D6E7E7;
+  --teal-200: #A6CBD0;
+  --teal-400: #2F8394;   /* secondary */
+  --teal-500: #256E7E;
+  --teal-600: #1C5361;   /* pressed */
+  --teal-700: #133C47;
+
+  /* ---- Ornament clay (ACCENT) ---- */
+  --clay-100: #F6D8CF;
+  --clay-200: #E9A99A;
+  --clay-400: #CB5340;   /* accent */
+  --clay-500: #AE4130;
+  --clay-600: #8C3123;   /* pressed */
+
+  /* ---- Steppe olive (tertiary / success family) ---- */
+  --olive-100: #E5E6C8;
+  --olive-400: #7C8B41;
+  --olive-600: #56622A;
+
+  /* ---- Semantic aliases ---- */
+  --brand:            var(--amber-400);
+  --brand-deep:       var(--amber-600);
+  --brand-soft:       var(--amber-100);
+
+  --bg:               var(--paper);
+  --bg-sunk:          var(--paper-deep);
+  --surface:          var(--paper-hi);
+  --surface-2:        #FFFFFF;
+
+  --text:             var(--ink);
+  --text-muted:       var(--ink-3);
+  --text-inverse:     var(--paper-hi);
+
+  --border:           var(--line);
+  --border-ink:       var(--line-strong);
+
+  --focus-ring:       var(--teal-400);
+
+  --success:          var(--olive-400);
+  --success-soft:     var(--olive-100);
+  --warning:          var(--amber-500);
+  --warning-soft:     var(--amber-100);
+  --danger:           var(--clay-400);
+  --danger-soft:      var(--clay-100);
+  --info:             var(--teal-400);
+  --info-soft:        var(--teal-100);
+
+  /* ---- Chess board squares ---- */
+  --square-light:     #EFDFB6;   /* amber-tinted cream */
+  --square-dark:      #2F8394;   /* steppe teal */
+  --square-move:      rgba(203, 83, 64, 0.42);   /* clay move highlight */
+  --square-origin:    rgba(231, 161, 63, 0.55);  /* amber origin */
+}
