@@ -52,32 +52,126 @@ function Stat({ n, label }) {
   );
 }
 
-// The foldable box "opened like a board" — built from CSS, not an image.
+// Hero-анимация: жабық қорап ашылады, ішінен фигуралар ретімен шығып,
+// ақ пен қара болып ойын басындағыдай өз орындарына тізіледі.
+const HB_WHITE = { rook: '♖', knight: '♘', bishop: '♗', queen: '♕', king: '♔', pawn: '♙' };
+const HB_BLACK = { rook: '♜', knight: '♞', bishop: '♝', queen: '♛', king: '♚', pawn: '♟' };
+const HB_BACK = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
+
 function BoxArt({ mobile }) {
-  const S = mobile ? 30 : 40;
+  const { useRef, useEffect, useState } = React;
+  const S = mobile ? 30 : 38;
+  const B = S * 8;
+  const lidRef = useRef(null);
+  const pieceRefs = useRef([]);
+  const animsRef = useRef([]);
+  const [done, setDone] = useState(false);
+
+  // Шығу реті: алдымен ақтар (1-қатар фигуралар → 2-қатар сарбаздар),
+  // сосын қаралар (8-қатар → 7-қатар).
+  const lineup = [];
+  HB_BACK.forEach((t, f) => lineup.push({ g: HB_WHITE[t], f, r: 1 }));
+  for (let f = 0; f < 8; f++) lineup.push({ g: HB_WHITE.pawn, f, r: 2 });
+  HB_BACK.forEach((t, f) => lineup.push({ g: HB_BLACK[t], f, r: 8 }));
+  for (let f = 0; f < 8; f++) lineup.push({ g: HB_BLACK.pawn, f, r: 7 });
+
+  const play = () => {
+    animsRef.current.forEach((a) => a.cancel());
+    animsRef.current = [];
+    setDone(false);
+
+    // 1-кезең: қораптың қақпағы ашылады
+    const lid = lidRef.current;
+    if (lid) {
+      lid.style.display = 'flex';
+      const la = lid.animate([
+        { transform: 'perspective(900px) rotateX(0deg)', opacity: 1, offset: 0 },
+        { transform: 'perspective(900px) rotateX(0deg)', opacity: 1, offset: 0.25 },
+        { transform: 'perspective(900px) rotateX(-106deg)', opacity: 1, offset: 0.82 },
+        { transform: 'perspective(900px) rotateX(-116deg)', opacity: 0, offset: 1 },
+      ], { duration: 1700, easing: 'cubic-bezier(.6,.05,.3,1)', fill: 'forwards' });
+      animsRef.current.push(la);
+    }
+
+    // 2–3-кезең: фигуралар ортадан шығып, орындарына ұшады
+    lineup.forEach((p, i) => {
+      const el = pieceRefs.current[i];
+      if (!el) return;
+      const t = 8 - p.r;
+      const sdx = B / 2 - (p.f * S + S / 2);
+      const sdy = B / 2 - (t * S + S / 2);
+      const lift = S * 1.1;
+      const delay = i < 16
+        ? 1500 + i * 105                          // ақтар
+        : 1500 + 16 * 105 + 900 + (i - 16) * 105; // сосын қаралар
+      const a = el.animate([
+        { opacity: 0, transform: `translate(${sdx}px, ${sdy + S * 0.4}px) scale(0.12)`, offset: 0 },
+        { opacity: 1, transform: `translate(${sdx}px, ${sdy - S * 0.9}px) scale(1.18)`, offset: 0.32 },
+        { opacity: 1, transform: `translate(${sdx / 2}px, ${(sdy - S * 0.9) / 2 - lift / 2}px) scale(1.06)`, offset: 0.62 },
+        { opacity: 1, transform: 'translate(0px, 0px) scale(1.12, 0.88)', offset: 0.9 },
+        { opacity: 1, transform: 'translate(0px, 0px) scale(1)', offset: 1 },
+      ], { duration: 900, delay, easing: 'cubic-bezier(.5,.08,.35,1)', fill: 'both' });
+      animsRef.current.push(a);
+    });
+
+    const total = 1500 + 16 * 105 + 900 + 15 * 105 + 900 + 200;
+    const timer = setTimeout(() => setDone(true), total);
+    animsRef.current.push({ cancel: () => clearTimeout(timer) });
+  };
+
+  useEffect(() => {
+    const t = setTimeout(play, 400);
+    return () => { clearTimeout(t); animsRef.current.forEach((a) => a.cancel()); };
+  }, []);
+
   const squares = [];
-  for (let i = 0; i < 36; i++) {
-    const r = Math.floor(i / 6), c = i % 6;
+  for (let i = 0; i < 64; i++) {
+    const r = Math.floor(i / 8), c = i % 8;
     squares.push(<div key={i} style={{ background: (r + c) % 2 ? 'var(--square-dark)' : 'var(--square-light)' }} />);
   }
-  const pieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'pawn'];
+
   return (
-    <div style={{
-      position: 'relative', transform: 'rotate(-3deg)',
-      padding: 12, background: 'var(--ink)', borderRadius: 'var(--radius-lg)',
-      boxShadow: 'var(--shadow-xl)',
-    }}>
-      <div style={{
-        display: 'grid', gridTemplateColumns: `repeat(6, ${S}px)`, gridAutoRows: `${S}px`,
-        borderRadius: 'var(--radius-sm)', overflow: 'hidden',
-      }}>{squares}</div>
-      <div style={{
-        marginTop: 10, display: 'flex', justifyContent: 'space-around',
-        background: 'var(--paper-deep)', borderRadius: 'var(--radius-sm)', padding: '8px 6px',
-        border: '2px dashed var(--ink-4)',
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+      <div onClick={play} title="Қайта ашу" style={{
+        position: 'relative', transform: 'rotate(-3deg)', cursor: 'pointer',
+        padding: 12, background: 'var(--ink)', borderRadius: 'var(--radius-lg)',
+        boxShadow: 'var(--shadow-xl)',
       }}>
-        {pieces.map((p) => <ChessPiece key={p} type={p} size={S * 0.7} />)}
+        <div style={{
+          position: 'relative',
+          display: 'grid', gridTemplateColumns: `repeat(8, ${S}px)`, gridAutoRows: `${S}px`,
+          borderRadius: 'var(--radius-sm)', overflow: 'hidden',
+        }}>
+          {squares}
+          {lineup.map((p, i) => (
+            <span key={i} ref={(el) => { pieceRefs.current[i] = el; }} style={{
+              position: 'absolute', left: p.f * S, top: (8 - p.r) * S, width: S, height: S,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: S * 0.74, lineHeight: 1, color: 'var(--ink)', opacity: 0,
+              textShadow: '0 1px 2px rgba(33,29,26,0.35)', pointerEvents: 'none', zIndex: 2,
+            }}>{p.g}</span>
+          ))}
+        </div>
+        <div ref={lidRef} style={{
+          position: 'absolute', inset: 0, zIndex: 5, pointerEvents: 'none',
+          background: 'var(--ink)', borderRadius: 'var(--radius-lg)',
+          transformOrigin: '50% 0%',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6,
+          boxShadow: '0 10px 24px rgba(33,29,26,0.35)',
+        }}>
+          <div style={{
+            position: 'absolute', inset: 10, border: '2px dashed rgba(252,248,239,0.35)',
+            borderRadius: 'var(--radius-md)',
+          }} />
+          <span style={{ fontSize: S * 1.5, lineHeight: 1, color: 'var(--amber-400)' }}>♞</span>
+          <span style={{ font: `var(--fw-black) ${S * 0.62}px var(--font-display)`, color: 'var(--paper-hi)', letterSpacing: '-0.02em' }}>Кулыншақ</span>
+          <span style={{ font: `var(--fw-bold) ${S * 0.34}px var(--font-display)`, color: 'var(--amber-200)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Шахмат жинағы</span>
+        </div>
       </div>
+      <div style={{
+        font: 'var(--fw-bold) 13px var(--font-display)', color: 'var(--ink-3)',
+        opacity: done ? 1 : 0, transition: 'opacity 0.4s',
+      }}>↻ Тақтаны бассаң — қорап қайта ашылады</div>
     </div>
   );
 }
