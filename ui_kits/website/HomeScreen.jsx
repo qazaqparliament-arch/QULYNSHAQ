@@ -64,6 +64,9 @@ function BoxArt({ mobile }) {
   const B = S * 8;
   const lidRef = useRef(null);
   const pieceRefs = useRef([]);
+  const beamRef = useRef(null);
+  const badgeRef = useRef(null);
+  const chipRefs = useRef([]);
   const animsRef = useRef([]);
   const [done, setDone] = useState(false);
 
@@ -114,8 +117,95 @@ function BoxArt({ mobile }) {
       animsRef.current.push(a);
     });
 
-    const total = 1500 + 16 * 105 + 900 + 15 * 105 + 900 + 200;
-    const timer = setTimeout(() => setDone(true), total);
+    // 4-кезең: әлемдегі ең қысқа партия — «Ақымақ маты» (1. f3 e5 2. g4 Уh4#)
+    const MB = 1500 + 16 * 105 + 900 + 15 * 105 + 900 + 500;
+
+    const slide = (idx, from, to, delay, dur) => {
+      const el = pieceRefs.current[idx];
+      if (!el) return;
+      const dx = (to.f - from.f) * S, dy = (from.r - to.r) * S;
+      animsRef.current.push(el.animate([
+        { transform: 'translate(0px, 0px)', offset: 0 },
+        { transform: `translate(${dx}px, ${dy * 0.5 - S * 0.25}px) scale(1.08)`, offset: 0.55 },
+        { transform: `translate(${dx}px, ${dy}px) scale(1)`, offset: 1 },
+      ], { duration: dur, delay, easing: 'cubic-bezier(.5,.1,.4,1)', fill: 'forwards' }));
+    };
+
+    const chip = (i, delay, persist) => {
+      const el = chipRefs.current[i];
+      if (!el) return;
+      const frames = persist
+        ? [
+            { opacity: 0, transform: 'translate(-50%, 8px) scale(0.8)', offset: 0 },
+            { opacity: 1, transform: 'translate(-50%, 0px) scale(1)', offset: 0.3 },
+            { opacity: 1, transform: 'translate(-50%, 0px) scale(1)', offset: 1 },
+          ]
+        : [
+            { opacity: 0, transform: 'translate(-50%, 8px) scale(0.8)', offset: 0 },
+            { opacity: 1, transform: 'translate(-50%, 0px) scale(1)', offset: 0.18 },
+            { opacity: 1, transform: 'translate(-50%, 0px) scale(1)', offset: 0.82 },
+            { opacity: 0, transform: 'translate(-50%, -8px) scale(0.9)', offset: 1 },
+          ];
+      animsRef.current.push(el.animate(frames, { duration: persist ? 700 : 1050, delay, fill: 'both' }));
+    };
+
+    chip(0, MB - 150, false);
+    slide(13, { f: 5, r: 2 }, { f: 5, r: 3 }, MB, 450);          // 1. f3
+    chip(1, MB + 850, false);
+    slide(28, { f: 4, r: 7 }, { f: 4, r: 5 }, MB + 1000, 550);   // 1… e5
+    chip(2, MB + 1850, false);
+    slide(14, { f: 6, r: 2 }, { f: 6, r: 4 }, MB + 2000, 550);   // 2. g4
+    chip(3, MB + 2850, true);
+
+    // 2… Уәзір d8 → h4 (доғамен ұшады)
+    const q = pieceRefs.current[19];
+    if (q) {
+      const dx = 4 * S, dy = 4 * S;
+      animsRef.current.push(q.animate([
+        { transform: 'translate(0px, 0px) scale(1)', offset: 0 },
+        { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - S * 1.5}px) scale(1.3)`, offset: 0.55 },
+        { transform: `translate(${dx}px, ${dy}px) scale(1.15, 0.85)`, offset: 0.9 },
+        { transform: `translate(${dx}px, ${dy}px) scale(1)`, offset: 1 },
+      ], { duration: 850, delay: MB + 3000, easing: 'cubic-bezier(.5,.08,.35,1)', fill: 'forwards' }));
+    }
+
+    // Шабуыл сызығы: h4 → e1 (уәзірден патшаға)
+    const beam = beamRef.current;
+    if (beam) {
+      const len = Math.hypot(3 * S, 3 * S);
+      beam.setAttribute('stroke-dasharray', len);
+      animsRef.current.push(beam.animate([
+        { opacity: 0, strokeDashoffset: len, offset: 0 },
+        { opacity: 1, strokeDashoffset: len, offset: 0.08 },
+        { opacity: 1, strokeDashoffset: 0, offset: 0.4 },
+        { opacity: 1, strokeDashoffset: 0, offset: 0.75 },
+        { opacity: 0, strokeDashoffset: 0, offset: 1 },
+      ], { duration: 2000, delay: MB + 3900, fill: 'both' }));
+    }
+
+    // Ақ патша құлайды
+    const king = pieceRefs.current[4];
+    if (king) {
+      animsRef.current.push(king.animate([
+        { transform: 'translate(0px, 0px) rotate(0deg)', offset: 0 },
+        { transform: `translate(${-S * 0.04}px, -2px) rotate(-9deg)`, offset: 0.3 },
+        { transform: `translate(${S * 0.14}px, ${S * 0.05}px) rotate(76deg)`, offset: 0.75 },
+        { transform: `translate(${S * 0.16}px, ${S * 0.02}px) rotate(69deg)`, offset: 0.88 },
+        { transform: `translate(${S * 0.16}px, ${S * 0.04}px) rotate(73deg)`, offset: 1 },
+      ], { duration: 900, delay: MB + 4100, easing: 'cubic-bezier(.55,.06,.5,1)', fill: 'forwards' }));
+    }
+
+    // «ШАХ ЖӘНЕ МАТ!» белгісі
+    const badge = badgeRef.current;
+    if (badge) {
+      animsRef.current.push(badge.animate([
+        { opacity: 0, transform: 'translate(-50%, -50%) scale(0.2) rotate(-14deg)', offset: 0 },
+        { opacity: 1, transform: 'translate(-50%, -50%) scale(1.14) rotate(4deg)', offset: 0.6 },
+        { opacity: 1, transform: 'translate(-50%, -50%) scale(1) rotate(-3deg)', offset: 1 },
+      ], { duration: 650, delay: MB + 4400, easing: 'cubic-bezier(.34,1.4,.5,1)', fill: 'forwards' }));
+    }
+
+    const timer = setTimeout(() => setDone(true), MB + 5400);
     animsRef.current.push({ cancel: () => clearTimeout(timer) });
   };
 
@@ -148,9 +238,17 @@ function BoxArt({ mobile }) {
               position: 'absolute', left: p.f * S, top: (8 - p.r) * S, width: S, height: S,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: S * 0.74, lineHeight: 1, color: 'var(--ink)', opacity: 0,
+              transformOrigin: '50% 82%',
               textShadow: '0 1px 2px rgba(33,29,26,0.35)', pointerEvents: 'none', zIndex: 2,
             }}>{p.g}</span>
           ))}
+          <svg width={B} height={B} style={{
+            position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 3,
+            filter: 'drop-shadow(0 0 3px #FF5470) drop-shadow(0 0 9px rgba(255,84,112,0.6))',
+          }}>
+            <line ref={beamRef} x1={7.5 * S} y1={4.5 * S} x2={4.5 * S} y2={7.5 * S}
+              stroke="#FF5470" strokeWidth="3.5" strokeLinecap="round" style={{ opacity: 0 }} />
+          </svg>
         </div>
         <div ref={lidRef} style={{
           position: 'absolute', inset: 0, zIndex: 5, pointerEvents: 'none',
@@ -167,11 +265,30 @@ function BoxArt({ mobile }) {
           <span style={{ font: `var(--fw-black) ${S * 0.62}px var(--font-display)`, color: 'var(--paper-hi)', letterSpacing: '-0.02em' }}>Кулыншақ</span>
           <span style={{ font: `var(--fw-bold) ${S * 0.34}px var(--font-display)`, color: 'var(--amber-200)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Шахмат жинағы</span>
         </div>
+        {['1. f3', '1… e5', '2. g4', '2… Уh4 — мат!'].map((label, i) => (
+          <div key={label} ref={(el) => { chipRefs.current[i] = el; }} style={{
+            position: 'absolute', top: -16, left: '50%', transform: 'translate(-50%, 0)',
+            opacity: 0, zIndex: 7, pointerEvents: 'none', whiteSpace: 'nowrap',
+            background: 'var(--ink)', color: 'var(--paper-hi)', border: '2px solid var(--amber-400)',
+            borderRadius: 'var(--radius-pill)', padding: '5px 14px',
+            font: `var(--fw-black) ${mobile ? 13 : 15}px var(--font-mono)`,
+          }}>{label}</div>
+        ))}
+        <div ref={badgeRef} style={{
+          position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+          opacity: 0, zIndex: 8, pointerEvents: 'none', textAlign: 'center',
+          background: 'var(--clay-400)', color: 'var(--paper-hi)', border: '3px solid var(--ink)',
+          borderRadius: 'var(--radius-lg)', padding: mobile ? '10px 16px' : '14px 22px',
+          boxShadow: 'var(--shadow-xl)',
+        }}>
+          <div style={{ font: `var(--fw-black) ${mobile ? 20 : 26}px var(--font-display)`, letterSpacing: '-0.01em' }}>ШАХ ЖӘНЕ МАТ!</div>
+          <div style={{ font: `var(--fw-bold) ${mobile ? 11 : 13}px var(--font-display)`, color: 'var(--clay-100)', marginTop: 3 }}>Әлемдегі ең қысқа партия — 2 жүріс</div>
+        </div>
       </div>
       <div style={{
         font: 'var(--fw-bold) 13px var(--font-display)', color: 'var(--ink-3)',
         opacity: done ? 1 : 0, transition: 'opacity 0.4s',
-      }}>↻ Тақтаны бассаң — қорап қайта ашылады</div>
+      }}>↻ Тақтаны бассаң — бәрі қайта ойнайды</div>
     </div>
   );
 }
