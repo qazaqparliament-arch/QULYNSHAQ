@@ -60,7 +60,7 @@ function LessonScreen({ lesson, onNav, onOpen, mobile }) {
           <Callout tone="rule" title="Ереже" style={{ marginTop: 8 }}>{l.rule}</Callout>
           <div style={{ marginTop: 16 }}>
             <StepList steps={[
-              { title: 'Фигураны қой', body: l.origin.toUpperCase() + ' шаршысына ' + l.kk.toLowerCase() + 'ты орналастыр.' },
+              { title: 'Фигураны қой', body: l.origin.toUpperCase() + ' шаршысына ' + (l.acc || l.kk.toLowerCase() + 'ды') + ' орналастыр.' },
               { title: 'Мүмкін жүрістер', body: 'Қызыл нүктелер — фигура жүре алатын шаршылар.' },
               { title: 'Өзің сынап көр', body: 'Видеомен бірге тақтада қайтала.' },
             ]} />

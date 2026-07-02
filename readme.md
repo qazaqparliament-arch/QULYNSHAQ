@@ -33,7 +33,7 @@ How Кулыншақ writes.
 - **Short, warm, encouraging.** One idea per sentence. Praise first, instruct second:
   «Тамаша! Ат «Г» әрпімен секіреді.» Avoid textbook/technical register
   («траектория», «фигура қозғалады») — say «секіреді», «жүреді», «ұрады».
-- **Kazakh piece names are canonical:** Патша (King), Уәзір (Queen), Тұра (Rook), Пілта (Bishop),
+- **Kazakh piece names are canonical:** Патша (King), Уәзір (Queen), Тұра (Rook), Піл (Bishop),
   **Ат** (Knight), Сарбаз (Pawn).
 - **Verbs of the product, in threes:** «Құрастыр · Жапсыр · Ойна» (Build · Stick · Play). This
   rhythmic triad is a recurring headline device.

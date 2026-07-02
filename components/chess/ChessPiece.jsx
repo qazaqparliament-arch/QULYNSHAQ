@@ -12,7 +12,7 @@ const GLYPHS = {
   king:   { black: '♚', white: '♔', kk: 'Патша' },
   queen:  { black: '♛', white: '♕', kk: 'Уәзір' },
   rook:   { black: '♜', white: '♖', kk: 'Тұра' },
-  bishop: { black: '♝', white: '♗', kk: 'Пілта' },
+  bishop: { black: '♝', white: '♗', kk: 'Піл' },
   knight: { black: '♞', white: '♘', kk: 'Ат' },
   pawn:   { black: '♟', white: '♙', kk: 'Сарбаз' },
 };

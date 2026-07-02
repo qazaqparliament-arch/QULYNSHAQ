@@ -29,7 +29,7 @@ production code, depending on the need.
 
 ## House rules (short)
 - Kazakh copy; address the child as «сен»; short + encouraging; Kazakh piece names
-  (Патша/Уәзір/Тұра/Пілта/Ат/Сарбаз).
+  (Патша/Уәзір/Тұра/Піл/Ат/Сарбаз).
 - Warm paper + ink base; amber primary, teal secondary, clay accent; warm-tinted shadows only.
 - Chunky buttons with a pressable bottom edge; generous radii; bounce only on toggles/checks.
 - Unicode chess glyphs as brand icons; emoji sparingly. No purple gradients, no neon, no
