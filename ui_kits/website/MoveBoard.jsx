@@ -70,20 +70,28 @@ function MoveBoard({ size = 8, cell = 46, piece = 'knight', origin = 'd4', moves
   useEffect(() => {
     if (!active || !moves.length) return undefined;
     const myRun = ++runId.current;
+    const el = flyRef.current;
+    const alive = () => runId.current === myRun && flyRef.current === el;
+    const reset = () => {
+      if (el) { el.getAnimations().forEach((a) => a.cancel()); el.style.opacity = 0; }
+    };
     (async () => {
-      const el = flyRef.current;
       let i = 0;
+      reset(); // алдыңғы сабақтан қалған fill-forwards трансформдарды өшіреміз
       await mbSleep(500); // сызықтар сызылып үлгерсін
-      while (runId.current === myRun && flyRef.current) {
+      while (alive()) {
         const sq = queueRef.current || moves[i % moves.length];
         queueRef.current = null;
         setTarget(sq);
         await fade(el, 0, 1);
+        if (!alive()) return;
         await fly(sq);
-        if (runId.current !== myRun) break;
+        if (!alive()) return;
         await mbSleep(560);
+        if (!alive()) return;
         await fade(el, 1, 0);
-        if (el) { el.getAnimations().forEach((a) => a.cancel()); el.style.opacity = 0; }
+        if (!alive()) return;
+        reset();
         setTarget(null);
         i += 1;
         await mbSleep(220);
@@ -92,8 +100,7 @@ function MoveBoard({ size = 8, cell = 46, piece = 'knight', origin = 'd4', moves
     return () => {
       runId.current += 1;
       setTarget(null);
-      const el = flyRef.current;
-      if (el) { el.getAnimations().forEach((a) => a.cancel()); el.style.opacity = 0; }
+      reset();
     };
   }, [active, origin, moves.join(',')]);
 

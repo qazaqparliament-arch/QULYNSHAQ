@@ -53,7 +53,7 @@ function LessonScreen({ lesson, onNav, onOpen, mobile }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '0.85fr 1.15fr', gap: 26, marginTop: 34, alignItems: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <MoveBoard cell={mobile ? 36 : 48} piece={l.piece} origin={l.origin} moves={l.moves} />
+          <MoveBoard key={l.slug} cell={mobile ? 36 : 48} piece={l.piece} origin={l.origin} moves={l.moves} />
         </div>
         <div>
           <h2 style={{ fontSize: mobile ? 24 : 30 }}>{l.kk} қалай жүреді?</h2>
