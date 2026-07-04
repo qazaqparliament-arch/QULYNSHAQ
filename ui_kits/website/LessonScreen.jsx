@@ -31,7 +31,51 @@ function LessonScreen({ lesson, onNav, onOpen, mobile }) {
   const idx = lessons.findIndex((x) => x.slug === l.slug);
   const prev = lessons[idx - 1], next = lessons[idx + 1];
 
+  // Кітап беті сияқты парақтау: алдымен ағымдағы бет «көтеріліп» жабылады
+  // (rotateY 0 → ±90°), дәл сол сәтте сабақ ауысады да, жаңа бет қарсы
+  // жақтан жазылып ашылады (∓90° → 0). Түбі (түптеу) — сол жақта.
+  const pageRef = React.useRef(null);
+  const shadeRef = React.useRef(null);
+  const flipping = React.useRef(false);
+  const pendingIn = React.useRef(null);
+
+  const turnTo = (target, dir) => {
+    const page = pageRef.current;
+    if (!target || !page || flipping.current) return;
+    flipping.current = true;
+    const out = dir === 'next' ? -90 : 90;
+    const a = page.animate([
+      { transform: 'rotateY(0deg)' },
+      { transform: `rotateY(${out}deg)` },
+    ], { duration: 380, easing: 'cubic-bezier(.55,.06,.68,.19)', fill: 'forwards' });
+    if (shadeRef.current) {
+      shadeRef.current.animate([{ opacity: 0 }, { opacity: 0.22 }], { duration: 380, fill: 'forwards' });
+    }
+    a.onfinish = () => { pendingIn.current = dir; onOpen(target); };
+    a.oncancel = () => { flipping.current = false; };
+  };
+
+  React.useEffect(() => {
+    const dir = pendingIn.current;
+    if (!dir) return;
+    pendingIn.current = null;
+    const page = pageRef.current, shade = shadeRef.current;
+    if (!page) { flipping.current = false; return; }
+    page.getAnimations().forEach((a) => a.cancel());
+    if (shade) shade.getAnimations().forEach((a) => a.cancel());
+    const from = dir === 'next' ? 90 : -90;
+    const a = page.animate([
+      { transform: `rotateY(${from}deg)` },
+      { transform: 'rotateY(0deg)' },
+    ], { duration: 430, easing: 'cubic-bezier(.17,.67,.3,1)', fill: 'both' });
+    if (shade) shade.animate([{ opacity: 0.22 }, { opacity: 0 }], { duration: 430, fill: 'both' });
+    a.onfinish = () => { flipping.current = false; };
+    a.oncancel = () => { flipping.current = false; };
+  }, [l.slug]);
+
   return (
+    <div style={{ perspective: '2000px' }}>
+    <div ref={pageRef} style={{ transformOrigin: 'left center', willChange: 'transform', position: 'relative', background: 'var(--bg)' }}>
     <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: mobile ? '20px 16px 50px' : '34px 28px 70px' }}>
       <button onClick={() => onNav('learn')} style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--teal-500)', font: 'var(--fw-bold) 15px var(--font-display)', padding: 0, marginBottom: 16 }}>← Барлық сабақ</button>
 
@@ -69,13 +113,19 @@ function LessonScreen({ lesson, onNav, onOpen, mobile }) {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginTop: 40, flexWrap: 'wrap' }}>
-        <Button variant="ghost" disabled={!prev} onClick={() => prev && onOpen(prev)} iconLeft={<span>←</span>}>
+        <Button variant="ghost" disabled={!prev} onClick={() => turnTo(prev, 'prev')} iconLeft={<span>←</span>}>
           {prev ? prev.kk : 'Басы'}
         </Button>
-        <Button variant="primary" disabled={!next} onClick={() => next && onOpen(next)} iconRight={<span>→</span>}>
+        <Button variant="primary" disabled={!next} onClick={() => turnTo(next, 'next')} iconRight={<span>→</span>}>
           Келесі: {next ? next.kk : 'Бітті!'}
         </Button>
       </div>
+    </div>
+    <div ref={shadeRef} style={{
+      position: 'absolute', inset: 0, opacity: 0, pointerEvents: 'none', zIndex: 30,
+      background: 'linear-gradient(90deg, rgba(33,29,26,0.55), rgba(33,29,26,0) 55%)',
+    }} />
+    </div>
     </div>
   );
 }
