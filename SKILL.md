@@ -1,6 +1,6 @@
 ---
 name: kulynshaq-design
-description: Use this skill to generate well-branded interfaces and assets for Кулыншақ (Kulynshaq) — a foldable, buildable chess-teaching box for kids (Kazakh-language, QR-video lessons, sticker pack, booklet) — for production or throwaway prototypes/mocks. Contains essential design guidelines, colors, type, fonts, assets, and UI kit components for prototyping.
+description: Use this skill to generate well-branded interfaces and assets for Құлыншақ (Kulynshaq) — a foldable, buildable chess-teaching box for kids (Kazakh-language, QR-video lessons, sticker pack, booklet) — for production or throwaway prototypes/mocks. Contains essential design guidelines, colors, type, fonts, assets, and UI kit components for prototyping.
 user-invocable: true
 ---
 

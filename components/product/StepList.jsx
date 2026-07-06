@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — StepList
+ * Құлыншақ — StepList
  * Numbered assembly / how-to steps for the booklet-on-screen. Each step is a paper row
  * with an amber number disc; optional fold-line divider evokes the buildable box.
  */

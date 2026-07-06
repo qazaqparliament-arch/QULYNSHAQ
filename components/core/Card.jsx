@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Card
+ * Құлыншақ — Card
  * Paper surface with a soft warm shadow. Variants echo the physical kit:
  *   paper   — default raised card
  *   cut     — printed "cut-line" ink border (like a piece to punch out)

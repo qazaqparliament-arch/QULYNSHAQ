@@ -1,4 +1,4 @@
-// Кулыншақ website — Assembly (how to build) + Order screens
+// Құлыншақ website — Assembly (how to build) + Order screens
 const { Button, Badge, Card, Callout, StepList, Sticker, ChessPiece, Input, Select, RadioGroup, Checkbox } = window.DesignSystem_d688da;
 
 function AssemblyScreen({ onNav, mobile }) {
@@ -95,7 +95,7 @@ function OrderScreen({ onNav, mobile }) {
       <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: 32, alignItems: 'start' }}>
         <div>
           <span className="ku-eyebrow">Тапсырыс</span>
-          <h1 style={{ fontSize: mobile ? 32 : 44, margin: '8px 0 0' }}>Кулыншақ қорабы</h1>
+          <h1 style={{ fontSize: mobile ? 32 : 44, margin: '8px 0 0' }}>Құлыншақ қорабы</h1>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 10 }}>
             <span style={{ font: 'var(--fw-black) 40px var(--font-display)', color: 'var(--clay-500)' }}>{priceStr}</span>
             <Badge tone="olive" variant="solid">жеткізумен келісіледі</Badge>

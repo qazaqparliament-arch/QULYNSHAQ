@@ -1,6 +1,6 @@
-# Кулыншақ — Design System
+# Құлыншақ — Design System
 
-> **Кулыншақ** (Kulynshaq, «құлыншақ» = *foal / colt*) is a foldable box that teaches children
+> **Құлыншақ** (Kulynshaq, «құлыншақ» = *foal / colt*) is a foldable box that teaches children
 > to play chess. Inside: punch-out, buildable chess pieces; a sticker pack to decorate them; a
 > printed booklet (how to build, how to play, how each piece moves); and a website that mirrors
 > the booklet. The box itself unfolds like a chessboard — the pieces store inside. **Every lesson
@@ -24,7 +24,7 @@ adaptation, and QR-per-lesson linking to YouTube videos.
 ---
 
 ## CONTENT FUNDAMENTALS
-How Кулыншақ writes.
+How Құлыншақ writes.
 
 - **Language:** Kazakh (Cyrillic, with the full extended set: ә ғ қ ң ө ұ ү һ і). A Russian gloss
   may appear beside piece names (e.g. *Ат · Конь*). Fonts are chosen for complete Kazakh coverage.

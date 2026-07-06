@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Checkbox
+ * Құлыншақ — Checkbox
  * Chunky rounded checkbox with an ink check. Controlled or uncontrolled.
  */
 export function Checkbox({

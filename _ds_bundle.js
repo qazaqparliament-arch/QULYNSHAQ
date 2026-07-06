@@ -12,9 +12,9 @@ const __ds_scope = {};
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — ChessPiece
+ * Құлыншақ — ChessPiece
  * A single chess piece rendered from Unicode glyphs, in the brand's token/disc style.
- * The knight (♞ / «ат») is the mascot tie-in — a horse, like кулыншақ (foal).
+ * The knight (♞ / «ат») is the mascot tie-in — a horse, like құлыншақ (foal).
  *
  * type: 'king'|'queen'|'rook'|'bishop'|'knight'|'pawn'
  * color: 'white' | 'black'  (piece colour, not the disc)
@@ -119,7 +119,7 @@ Object.assign(__ds_scope, { ChessPiece });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — ChessBoard
+ * Құлыншақ — ChessBoard
  * A teaching board. Renders an N×N grid (default 8), places pieces, and highlights
  * legal-move squares — built for the "how each piece moves" lessons.
  *
@@ -243,7 +243,7 @@ Object.assign(__ds_scope, { ChessBoard });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Badge
+ * Құлыншақ — Badge
  * Small status/label pill. Use for lesson numbers, difficulty, "new", counts.
  */
 function Badge({
@@ -328,7 +328,7 @@ Object.assign(__ds_scope, { Badge });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Button
+ * Құлыншақ — Button
  * Chunky, tactile, kid-friendly. Solid "printed edge" underneath that compresses on press.
  */
 function Button({
@@ -455,7 +455,7 @@ Object.assign(__ds_scope, { Button });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Callout
+ * Құлыншақ — Callout
  * Boxed tip/note for the booklet & lesson voice. A left "rule" strip + optional icon.
  * Tones map to teaching intents: tip, rule, warning, fun.
  */
@@ -535,7 +535,7 @@ Object.assign(__ds_scope, { Callout });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Card
+ * Құлыншақ — Card
  * Paper surface with a soft warm shadow. Variants echo the physical kit:
  *   paper   — default raised card
  *   cut     — printed "cut-line" ink border (like a piece to punch out)
@@ -601,7 +601,7 @@ Object.assign(__ds_scope, { Card });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — IconButton
+ * Құлыншақ — IconButton
  * Square/round tactile button for a single glyph (Lucide icon or Unicode chess piece).
  */
 function IconButton({
@@ -684,7 +684,7 @@ Object.assign(__ds_scope, { IconButton });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Checkbox
+ * Құлыншақ — Checkbox
  * Chunky rounded checkbox with an ink check. Controlled or uncontrolled.
  */
 function Checkbox({
@@ -771,7 +771,7 @@ Object.assign(__ds_scope, { Checkbox });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Input
+ * Құлыншақ — Input
  * Text field with optional label, hint, error, and leading glyph. Warm paper fill.
  */
 function Input({
@@ -854,7 +854,7 @@ Object.assign(__ds_scope, { Input });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Radio & RadioGroup
+ * Құлыншақ — Radio & RadioGroup
  * Round selector with an amber dot. Use RadioGroup for a set.
  */
 function Radio({
@@ -964,7 +964,7 @@ Object.assign(__ds_scope, { Radio, RadioGroup });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Select
+ * Құлыншақ — Select
  * Native-backed dropdown styled to match Input. Warm paper fill, chevron glyph.
  */
 function Select({
@@ -1060,7 +1060,7 @@ Object.assign(__ds_scope, { Select });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Switch
+ * Құлыншақ — Switch
  * Chunky toggle. Track goes teal when on; knob slides with a soft bounce.
  */
 function Switch({
@@ -1147,7 +1147,7 @@ Object.assign(__ds_scope, { Switch });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — QRTag
+ * Құлыншақ — QRTag
  * Every lesson carries a QR code that opens its YouTube video. This renders a styled QR
  * PLACEHOLDER (a deterministic faux-module grid) inside the brand's tag frame — swap the
  * grid for a real generated QR in production. Includes a play affordance + caption.
@@ -1270,7 +1270,7 @@ Object.assign(__ds_scope, { QRTag });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — StepList
+ * Құлыншақ — StepList
  * Numbered assembly / how-to steps for the booklet-on-screen. Each step is a paper row
  * with an amber number disc; optional fold-line divider evokes the buildable box.
  */
@@ -1342,7 +1342,7 @@ Object.assign(__ds_scope, { StepList });
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Кулыншақ — Sticker
+ * Құлыншақ — Sticker
  * The peel-and-stick look from the physical sticker pack: thick chalk border, drop shadow,
  * a playful tilt. Wrap any content (emoji, glyph, short label, image).
  */
@@ -1410,7 +1410,7 @@ Object.assign(__ds_scope, { Sticker });
 
 // ui_kits/website/AssemblyScreen.jsx
 try { (() => {
-// Кулыншақ website — Assembly (how to build) + Order screens
+// Құлыншақ website — Assembly (how to build) + Order screens
 const {
   Button,
   Badge,
@@ -1688,7 +1688,7 @@ Object.assign(window, {
 
 // ui_kits/website/Chrome.jsx
 try { (() => {
-// Кулыншақ website — Header & Footer chrome
+// Құлыншақ website — Header & Footer chrome
 const {
   Button,
   Badge
@@ -1863,7 +1863,7 @@ Object.assign(window, {
 
 // ui_kits/website/HomeScreen.jsx
 try { (() => {
-// Кулыншақ website — Home screen
+// Құлыншақ website — Home screen
 const {
   Button,
   Badge,
@@ -2247,7 +2247,7 @@ Object.assign(window, {
 
 // ui_kits/website/LearnScreen.jsx
 try { (() => {
-// Кулыншақ website — Learn (all lessons) screen
+// Құлыншақ website — Learn (all lessons) screen
 const {
   Button,
   Badge,
@@ -2400,7 +2400,7 @@ Object.assign(window, {
 
 // ui_kits/website/LessonScreen.jsx
 try { (() => {
-// Кулыншақ website — Lesson detail screen
+// Құлыншақ website — Lesson detail screen
 const {
   Button,
   Badge,
@@ -2648,7 +2648,7 @@ Object.assign(window, {
 
 // ui_kits/website/data.js
 try { (() => {
-// Кулыншақ website — shared demo data (loaded before the screens)
+// Құлыншақ website — shared demo data (loaded before the screens)
 window.KU_DATA = {
   lessons: [{
     n: 1,

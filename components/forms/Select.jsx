@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Select
+ * Құлыншақ — Select
  * Native-backed dropdown styled to match Input. Warm paper fill, chevron glyph.
  */
 export function Select({

@@ -1,6 +1,6 @@
-# Кулыншақ — Website UI kit
+# Құлыншақ — Website UI kit
 
-A high-fidelity, click-through recreation of the **Кулыншақ** marketing + learning site: the
+A high-fidelity, click-through recreation of the **Құлыншақ** marketing + learning site: the
 public face of a foldable, buildable chess-teaching box for kids. It composes the design
 system's primitives (`Button`, `Card`, `Badge`, `Callout`, `ChessBoard`, `ChessPiece`, `QRTag`,
 `Sticker`, `StepList`, form controls) — it does not re-implement them.

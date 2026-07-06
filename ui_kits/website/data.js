@@ -1,4 +1,4 @@
-// Кулыншақ website — shared demo data (loaded before the screens)
+// Құлыншақ website — shared demo data (loaded before the screens)
 window.KU_DATA = {
   lessons: [
     {

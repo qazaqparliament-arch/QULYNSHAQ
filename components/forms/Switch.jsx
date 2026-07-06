@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Switch
+ * Құлыншақ — Switch
  * Chunky toggle. Track goes teal when on; knob slides with a soft bounce.
  */
 export function Switch({

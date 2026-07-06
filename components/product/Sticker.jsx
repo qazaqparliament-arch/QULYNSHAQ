@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Sticker
+ * Құлыншақ — Sticker
  * The peel-and-stick look from the physical sticker pack: thick chalk border, drop shadow,
  * a playful tilt. Wrap any content (emoji, glyph, short label, image).
  */

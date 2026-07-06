@@ -2,7 +2,7 @@ import React from 'react';
 import { ChessPiece } from './ChessPiece.jsx';
 
 /**
- * Кулыншақ — ChessBoard
+ * Құлыншақ — ChessBoard
  * A teaching board. Renders an N×N grid (default 8), places pieces, and highlights
  * legal-move squares — built for the "how each piece moves" lessons.
  *

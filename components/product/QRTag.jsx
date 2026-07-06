@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — QRTag
+ * Құлыншақ — QRTag
  * Every lesson carries a QR code that opens its YouTube video. This renders a styled QR
  * PLACEHOLDER (a deterministic faux-module grid) inside the brand's tag frame — swap the
  * grid for a real generated QR in production. Includes a play affordance + caption.

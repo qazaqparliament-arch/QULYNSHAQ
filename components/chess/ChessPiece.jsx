@@ -1,9 +1,9 @@
 import React from 'react';
 
 /**
- * Кулыншақ — ChessPiece
+ * Құлыншақ — ChessPiece
  * A single chess piece rendered from Unicode glyphs, in the brand's token/disc style.
- * The knight (♞ / «ат») is the mascot tie-in — a horse, like кулыншақ (foal).
+ * The knight (♞ / «ат») is the mascot tie-in — a horse, like құлыншақ (foal).
  *
  * type: 'king'|'queen'|'rook'|'bishop'|'knight'|'pawn'
  * color: 'white' | 'black'  (piece colour, not the disc)

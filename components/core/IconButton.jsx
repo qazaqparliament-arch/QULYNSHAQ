@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — IconButton
+ * Құлыншақ — IconButton
  * Square/round tactile button for a single glyph (Lucide icon or Unicode chess piece).
  */
 export function IconButton({

@@ -1,4 +1,4 @@
-// Кулыншақ website — Header & Footer chrome
+// Құлыншақ website — Header & Footer chrome
 const { Button, Badge } = window.DesignSystem_d688da;
 
 function Header({ route, onNav, mobile }) {
@@ -18,8 +18,8 @@ function Header({ route, onNav, mobile }) {
       <button onClick={() => onNav('home')} style={{
         display: 'flex', alignItems: 'center', gap: 9, border: 'none', background: 'none', cursor: 'pointer',
       }}>
-        <span style={{ fontSize: 26, lineHeight: 1 }}>♞</span>
-        <span style={{ font: 'var(--fw-black) 24px var(--font-display)', letterSpacing: '-0.02em', color: 'var(--ink)' }}>Кулыншақ</span>
+        <span style={{ fontSize: mobile ? 48 : 68, lineHeight: 1, color: 'var(--logo-knight, var(--ink))', margin: mobile ? '-12px 0' : '-18px 0', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.35))' }}>♞</span>
+        <span style={{ font: 'var(--fw-black) 24px var(--font-display)', letterSpacing: '-0.02em', color: 'var(--ink)' }}>Құлыншақ</span>
       </button>
       {!mobile && (
         <nav style={{ display: 'flex', gap: 4 }}>
@@ -49,7 +49,7 @@ function Footer() {
         <div style={{ maxWidth: 320 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 24 }}>♞</span>
-            <span style={{ font: 'var(--fw-black) 22px var(--font-display)', color: 'var(--footer-title, var(--paper-hi))' }}>Кулыншақ</span>
+            <span style={{ font: 'var(--fw-black) 22px var(--font-display)', color: 'var(--footer-title, var(--paper-hi))' }}>Құлыншақ</span>
           </div>
           <p style={{ color: 'var(--footer-dim, var(--ink-4))', fontSize: 14, marginTop: 10, lineHeight: 1.6 }}>
             Балаға шахматты үйрететін құрастырмалы қорап. Әр сабақта — QR арқылы видео.
@@ -62,7 +62,7 @@ function Footer() {
         </div>
       </div>
       <div style={{ maxWidth: 'var(--container)', margin: '26px auto 0', paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.12)', color: 'var(--footer-dim, var(--ink-4))', fontSize: 13, fontFamily: 'var(--font-mono)' }}>
-        © 2026 Кулыншақ · Қазақстанда жасалған
+        © 2026 Құлыншақ · Қазақстанда жасалған
       </div>
     </footer>
   );

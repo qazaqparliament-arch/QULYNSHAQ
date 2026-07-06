@@ -1,4 +1,4 @@
-// Кулыншақ website — Home screen
+// Құлыншақ website — Home screen
 const { Button, Badge, Card, Sticker, ChessPiece, ChessBoard, Callout } = window.DesignSystem_d688da;
 
 function Hero({ onNav, mobile }) {
@@ -18,7 +18,7 @@ function Hero({ onNav, mobile }) {
             Шахматты<br />ойнап үйрен
           </h1>
           <p style={{ fontSize: mobile ? 17 : 20, color: 'var(--ink-2)', maxWidth: 460, marginTop: 14 }}>
-            Кулыншақ — өзің құрастыратын шахмат қорабы. Фигураларды жина, стикерлерін жапсыр, әр сабақтың QR-ын сканерлеп видеодан үйрен.
+            Құлыншақ — өзің құрастыратын шахмат қорабы. Фигураларды жина, стикерлерін жапсыр, әр сабақтың QR-ын сканерлеп видеодан үйрен.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 24, flexWrap: 'wrap' }}>
             <Button variant="primary" size="lg" onClick={() => onNav('order')} iconRight={<span>♞</span>}>Қорапты алу</Button>
@@ -262,7 +262,7 @@ function BoxArt({ mobile }) {
             borderRadius: 'var(--radius-md)',
           }} />
           <span style={{ fontSize: S * 1.5, lineHeight: 1, color: 'var(--amber-400)' }}>♞</span>
-          <span style={{ font: `var(--fw-black) ${S * 0.62}px var(--font-display)`, color: 'var(--paper-hi)', letterSpacing: '-0.02em' }}>Кулыншақ</span>
+          <span style={{ font: `var(--fw-black) ${S * 0.62}px var(--font-display)`, color: 'var(--paper-hi)', letterSpacing: '-0.02em' }}>Құлыншақ</span>
           <span style={{ font: `var(--fw-bold) ${S * 0.34}px var(--font-display)`, color: 'var(--amber-200)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Шахмат жинағы</span>
         </div>
         {['1. f3', '1… e5', '2. g4', '2… Уh4 — мат!'].map((label, i) => (

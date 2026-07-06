@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Callout
+ * Құлыншақ — Callout
  * Boxed tip/note for the booklet & lesson voice. A left "rule" strip + optional icon.
  * Tones map to teaching intents: tip, rule, warning, fun.
  */

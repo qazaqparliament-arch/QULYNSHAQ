@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Radio & RadioGroup
+ * Құлыншақ — Radio & RadioGroup
  * Round selector with an amber dot. Use RadioGroup for a set.
  */
 export function Radio({ label, value, checked, onChange, name, disabled = false, style = {}, id, ...rest }) {

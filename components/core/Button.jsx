@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Button
+ * Құлыншақ — Button
  * Chunky, tactile, kid-friendly. Solid "printed edge" underneath that compresses on press.
  */
 export function Button({

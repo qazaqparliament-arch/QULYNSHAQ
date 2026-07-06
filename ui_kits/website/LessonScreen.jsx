@@ -1,4 +1,4 @@
-// Кулыншақ website — Lesson detail screen
+// Құлыншақ website — Lesson detail screen
 const { Button, Badge, Card, Callout, ChessPiece, ChessBoard, QRTag, StepList } = window.DesignSystem_d688da;
 
 function VideoPlayer({ lesson, mobile }) {
@@ -19,7 +19,7 @@ function VideoPlayer({ lesson, mobile }) {
       }}>{playing ? '❚❚' : '▶'}</button>
       <div style={{ position: 'absolute', bottom: 12, left: 14, display: 'flex', gap: 8, alignItems: 'center' }}>
         <Badge tone="ink">{playing ? '0:12' : '0:00'} / {lesson.mins}:00</Badge>
-        <span style={{ color: 'var(--paper-hi)', font: 'var(--fw-bold) 13px var(--font-mono)', opacity: 0.8 }}>YouTube · Кулыншақ</span>
+        <span style={{ color: 'var(--paper-hi)', font: 'var(--fw-bold) 13px var(--font-mono)', opacity: 0.8 }}>YouTube · Құлыншақ</span>
       </div>
     </div>
   );
@@ -46,7 +46,7 @@ function BoxPeekVideo({ mobile }) {
       }}>{playing ? '❚❚' : '▶'}</button>
       <div style={{ position: 'absolute', bottom: 12, left: 14, display: 'flex', gap: 8, alignItems: 'center' }}>
         <Badge tone="ink">видео шолу</Badge>
-        <span style={{ color: '#F5EEDA', font: 'var(--fw-bold) 13px var(--font-mono)', opacity: 0.85 }}>YouTube · Кулыншақ</span>
+        <span style={{ color: '#F5EEDA', font: 'var(--fw-bold) 13px var(--font-mono)', opacity: 0.85 }}>YouTube · Құлыншақ</span>
       </div>
     </div>
   );

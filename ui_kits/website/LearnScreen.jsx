@@ -1,4 +1,4 @@
-// Кулыншақ website — Learn (all lessons) screen
+// Құлыншақ website — Learn (all lessons) screen
 const { Button, Badge, Card, ChessPiece, QRTag } = window.DesignSystem_d688da;
 
 function LessonCard({ lesson, onOpen, mobile }) {

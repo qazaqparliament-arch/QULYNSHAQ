@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Input
+ * Құлыншақ — Input
  * Text field with optional label, hint, error, and leading glyph. Warm paper fill.
  */
 export function Input({

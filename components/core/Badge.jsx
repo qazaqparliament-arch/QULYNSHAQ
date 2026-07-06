@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Кулыншақ — Badge
+ * Құлыншақ — Badge
  * Small status/label pill. Use for lesson numbers, difficulty, "new", counts.
  */
 export function Badge({
