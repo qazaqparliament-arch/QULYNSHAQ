@@ -16,7 +16,7 @@ function AssemblyScreen({ onNav, mobile }) {
 
       <div style={{ marginTop: 22, background: 'var(--surface)', border: '2px solid var(--line)', borderRadius: 'var(--radius-xl)', padding: mobile ? 18 : 26 }}>
         <StepList steps={[
-          { title: 'Парақтарды шығар', body: 'Қораптан қатырғаз парақтарын ал. Әр парақта фигура бөлшектері белгіленген.' },
+          { title: 'Парақтарды шығар', body: 'Қораптан ағаш фанер қиындыларын ал. Әр қиындыда фигура бөлшектері белгіленген.' },
           { title: 'Бөлшектерді ажырат', body: 'Тесіктер (перфорация) бойынша бөлшектерді ақырын шығар. Асықпа!' },
           { title: 'Фигураны жина', body: 'Бөлшектерді «А» ойығына «Б» тілін кигіз. Ат, тұра, піл — бәрі осылай.' },
           { title: 'Стикерлерін жапсыр', body: 'Әр фигураға өз стикерін жапсыр. Ақ пен қараны шатастырма.' },
@@ -42,7 +42,7 @@ function OrderScreen({ onNav, mobile }) {
   const PRICE = CFG.PRICE || 12900;
   const priceStr = PRICE.toLocaleString('ru-RU') + ' ₸';
   const [done, setDone] = React.useState(null); // null | тапсырыс объектісі
-  const [level, setLevel] = React.useState('Бастауыш (4–6 жас)');
+  const [level, setLevel] = React.useState('Бастауыш (3–6 жас)');
 
   const submit = (e) => {
     e.preventDefault();
@@ -101,7 +101,7 @@ function OrderScreen({ onNav, mobile }) {
             <Badge tone="olive" variant="solid">жеткізумен келісіледі</Badge>
           </div>
           <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {['32 құрастырмалы фигура', 'Фигура стикер пактары (2 команда)', 'Тақта-стикер (қораптың үсті мен асты)', 'Кітап-нұсқаулық — әр тақырыпта QR', '6 видео сабақ (3-уі сайтта тегін)'].map((t) => (
+            {['32 құрастырмалы ағаш фигура', 'Әр фигурада: 3 ағаш деталь + 5 стикер', 'Тақта-стикер (қораптың үсті мен асты)', 'Кітап-нұсқаулық — әр тақырыпта QR', '13 видео сабақ (3-уі сайтта тегін)'].map((t) => (
               <div key={t} style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                 <span style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--success-soft)', color: 'var(--olive-600)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, flex: '0 0 auto' }}>✓</span>
                 <span style={{ fontSize: 16 }}>{t}</span>
@@ -131,7 +131,7 @@ function OrderScreen({ onNav, mobile }) {
               <Input label="Почта индексі" name="postindex" inputMode="numeric" placeholder="050000" required />
               <div>
                 <div style={{ font: 'var(--fw-bold) 15px var(--font-display)', color: 'var(--ink-2)', marginBottom: 8 }}>Баланың деңгейі</div>
-                <RadioGroup value={level} onChange={setLevel} options={['Бастауыш (4–6 жас)', 'Орта (7–9 жас)', 'Дайын (10+ жас)']} />
+                <RadioGroup value={level} onChange={setLevel} options={['Бастауыш (3–6 жас)', 'Орта (7–9 жас)', 'Дайын (10–13 жас)']} />
               </div>
               <Checkbox label="WhatsApp-пен хабарласуға болады" name="waok" defaultChecked />
               <Button type="submit" variant="accent" size="lg" full>Тапсырысты растау · {priceStr}</Button>

@@ -25,9 +25,9 @@ function Hero({ onNav, mobile }) {
             <Button variant="outline" size="lg" onClick={() => onNav('learn')}>Сабақтарды көру</Button>
           </div>
           <div style={{ display: 'flex', gap: 20, marginTop: 26, flexWrap: 'wrap' }}>
-            <Stat n="6" label="видео сабақ" />
+            <Stat n="13" label="видео сабақ" />
             <Stat n="32" label="құрастырмалы фигура" />
-            <Stat n="4+" label="жас" />
+            <Stat n="3–13" label="жас" />
           </div>
         </div>
         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
@@ -295,7 +295,7 @@ function BoxArt({ mobile }) {
 
 function WhatsInside({ mobile }) {
   const items = [
-    { icon: '♟', t: 'Құрастырмалы фигуралар', d: 'Қатырғаз бөлшектерді тесіктер бойынша шығарып жина.' },
+    { icon: '♟', t: 'Құрастырмалы фигуралар', d: 'Ағаш фанер қиындыларын жинап, фигура жаса: 3 деталь + 5 стикер.' },
     { icon: '★', t: 'Стикер пак', d: 'Әр фигураға өз стикерін жапсыр — өзіңдікі болады.' },
     { icon: '📖', t: 'Кітап-нұсқаулық', d: 'Қалай құрастыру, қалай ойнау — қадам-қадаммен.' },
     { icon: '▶', t: 'QR видео сабақтар', d: 'Сканерле — YouTube-тағы видео сабақ ашылады.' },
