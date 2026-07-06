@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Кулыншақ — админ панель</title>
+<script src="config.js"></script>
+<style>
+  :root {
+    --bg0: #16181b; --bg1: #202429; --panel: rgba(28,31,35,.92); --panel-bd: #3a3f46;
+    --ink: #efe7d8; --dim: #a49f93; --wood: #e0b46b; --wood-deep: #c08a3e;
+    --clay: #cb5340; --olive: #7c8b41;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh; background: radial-gradient(120% 120% at 50% 0%, var(--bg1), var(--bg0) 70%);
+    color: var(--ink); font-family: "Rubik", "Segoe UI", system-ui, sans-serif; padding: 24px 16px;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; }
+  .brand { display: flex; align-items: baseline; gap: 10px; margin-bottom: 20px; }
+  .brand b { font-size: 20px; letter-spacing: .03em; }
+  .brand .dot { color: var(--wood); }
+  .brand small { color: var(--dim); font-family: ui-monospace, monospace; font-size: 12px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--panel-bd); border-radius: 14px;
+    padding: 22px; backdrop-filter: blur(8px);
+  }
+  .login { max-width: 380px; margin: 10vh auto 0; }
+  .login h1 { font-size: 20px; margin-bottom: 6px; }
+  .login p { color: var(--dim); font-size: 13px; margin-bottom: 16px; line-height: 1.5; }
+  input[type=password] {
+    width: 100%; padding: 11px 13px; border-radius: 9px; border: 1px solid var(--panel-bd);
+    background: #14161a; color: var(--ink); font-size: 15px; outline: none;
+  }
+  input[type=password]:focus { border-color: var(--wood); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px; border-radius: 9px;
+    border: 1px solid var(--wood-deep); background: var(--wood); color: #241a08;
+    font-weight: 700; font-size: 14px; cursor: pointer;
+  }
+  .btn.ghost { background: transparent; color: var(--wood); }
+  .btn.gray { background: transparent; color: var(--dim); border-color: var(--panel-bd); }
+  .btn:active { transform: translateY(1px); }
+  .err { color: #ff8f7d; font-size: 13px; margin-top: 10px; display: none; }
+  .bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+  .stat {
+    background: var(--panel); border: 1px solid var(--panel-bd); border-radius: 12px;
+    padding: 12px 18px; min-width: 130px;
+  }
+  .stat .n { font-size: 22px; font-weight: 800; color: var(--wood); }
+  .stat .l { font-size: 12px; color: var(--dim); margin-top: 2px; }
+  .spacer { flex: 1; }
+  .note {
+    background: rgba(224,180,107,.1); border: 1px dashed var(--wood-deep); color: var(--wood);
+    border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; display: none;
+  }
+  .tablewrap { overflow-x: auto; border: 1px solid var(--panel-bd); border-radius: 12px; }
+  table { border-collapse: collapse; width: 100%; min-width: 980px; background: rgba(20,22,26,.6); }
+  th, td { padding: 9px 12px; font-size: 13px; text-align: left; border-bottom: 1px solid #2c3036; white-space: nowrap; }
+  th {
+    background: #1d2024; color: var(--dim); font-size: 11px; text-transform: uppercase;
+    letter-spacing: .08em; position: sticky; top: 0;
+  }
+  tr:hover td { background: rgba(224,180,107,.05); }
+  td.num { color: var(--dim); }
+  td.price { color: var(--wood); font-weight: 700; }
+  .empty { text-align: center; color: var(--dim); padding: 34px; font-size: 14px; }
+  #panel { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><b>♞ КУЛЫНШАҚ<span class="dot"> ·</span> админ</b><small>тапсырыстар журналы</small></div>
+
+  <div class="card login" id="loginCard">
+    <h1>Кіру</h1>
+    <p>Тапсырыстар кестесін көру үшін парольді енгізіңіз.</p>
+    <input type="password" id="pass" placeholder="Пароль" autocomplete="current-password">
+    <div class="err" id="loginErr">Пароль қате. Қайталап көріңіз.</div>
+    <div style="margin-top:14px; display:flex; gap:10px;">
+      <button class="btn" id="loginBtn">Кіру</button>
+      <a class="btn ghost" href="index.html">← Сайтқа оралу</a>
+    </div>
+  </div>
+
+  <div id="panel">
+    <div class="note" id="demoNote">
+      Демо режим: вебхук қосылмаған (config.js → WEBHOOK_URL бос), сондықтан тек осы браузерде жасалған
+      тапсырыстар көрініп тұр. Толық жүйе үшін setup/SETUP.md нұсқаулығын орындаңыз.
+    </div>
+    <div class="bar">
+      <div class="stat"><div class="n" id="stTotal">0</div><div class="l">барлық тапсырыс</div></div>
+      <div class="stat"><div class="n" id="stToday">0</div><div class="l">бүгін</div></div>
+      <div class="stat"><div class="n" id="stSum">0 ₸</div><div class="l">жалпы сома</div></div>
+      <div class="spacer"></div>
+      <button class="btn ghost" id="refreshBtn">↻ Жаңарту</button>
+      <button class="btn" id="csvBtn">⬇ Excel (CSV)</button>
+      <button class="btn gray" id="logoutBtn">Шығу</button>
+    </div>
+    <div class="tablewrap">
+      <table id="tbl">
+        <thead><tr>
+          <th>№</th><th>ID</th><th>Уақыты</th><th>Аты</th><th>Телефон</th><th>Қала</th>
+          <th>Мекенжай</th><th>Индекс</th><th>Деңгей</th><th>WhatsApp</th><th>Бағасы</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" style="display:none">Әзірге тапсырыс жоқ.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CFG = window.KU_CONFIG || {};
+const WEBHOOK = CFG.WEBHOOK_URL || '';
+let ORDERS = [];
+let KEY = sessionStorage.getItem('ku_admin_key') || '';
+
+const $ = (id) => document.getElementById(id);
+
+async function fetchOrders(key) {
+  if (!WEBHOOK) {
+    if (key !== (CFG.DEMO_ADMIN_PASSWORD || 'kulynshaq2026')) throw new Error('auth');
+    try { return JSON.parse(localStorage.getItem('ku_orders') || '[]'); } catch (e) { return []; }
+  }
+  const r = await fetch(WEBHOOK + '?action=list&key=' + encodeURIComponent(key));
+  const j = await r.json();
+  if (!j.ok) throw new Error('auth');
+  return j.orders || [];
+}
+
+function render() {
+  const tb = $('tbody');
+  tb.innerHTML = '';
+  const today = new Date().toLocaleDateString('ru-RU');
+  let sum = 0, todayN = 0;
+  ORDERS.forEach((o, i) => {
+    sum += Number(o.price) || 0;
+    if ((o.time || '').startsWith(today)) todayN += 1;
+    const tr = document.createElement('tr');
+    const cells = [i + 1, o.id, o.time, o.name, o.phone, o.city, o.address, o.postindex, o.level, o.wa, (Number(o.price) || 0).toLocaleString('ru-RU') + ' ₸'];
+    cells.forEach((c, j) => {
+      const td = document.createElement('td');
+      td.textContent = c == null ? '' : c;
+      if (j === 0) td.className = 'num';
+      if (j === 10) td.className = 'price';
+      tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  });
+  $('stTotal').textContent = ORDERS.length;
+  $('stToday').textContent = todayN;
+  $('stSum').textContent = sum.toLocaleString('ru-RU') + ' ₸';
+  $('empty').style.display = ORDERS.length ? 'none' : 'block';
+}
+
+async function enter(key) {
+  ORDERS = await fetchOrders(key);
+  KEY = key;
+  sessionStorage.setItem('ku_admin_key', key);
+  $('loginCard').style.display = 'none';
+  $('panel').style.display = 'block';
+  $('demoNote').style.display = WEBHOOK ? 'none' : 'block';
+  render();
+}
+
+$('loginBtn').onclick = async () => {
+  $('loginErr').style.display = 'none';
+  try { await enter($('pass').value); }
+  catch (e) { $('loginErr').style.display = 'block'; }
+};
+$('pass').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('loginBtn').click(); });
+
+$('refreshBtn').onclick = async () => { try { ORDERS = await fetchOrders(KEY); render(); } catch (e) {} };
+$('logoutBtn').onclick = () => { sessionStorage.removeItem('ku_admin_key'); location.reload(); };
+
+$('csvBtn').onclick = () => {
+  const head = ['№', 'ID', 'Уақыты', 'Аты', 'Телефон', 'Қала', 'Мекенжай', 'Индекс', 'Деңгей', 'WhatsApp', 'Бағасы'];
+  const esc = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+  const rows = ORDERS.map((o, i) => [i + 1, o.id, o.time, o.name, o.phone, o.city, o.address, o.postindex, o.level, o.wa, o.price].map(esc).join(';'));
+  const csv = '﻿' + head.map(esc).join(';') + '\n' + rows.join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = 'kulynshaq-tapsyrystar.csv';
+  a.click();
+};
+
+if (KEY) { enter(KEY).catch(() => { sessionStorage.removeItem('ku_admin_key'); }); }
+</script>
+</body>
+</html>

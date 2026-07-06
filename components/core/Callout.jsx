@@ -15,9 +15,9 @@ export function Callout({
 }) {
   const tones = {
     tip:     { bg: 'var(--teal-100)',  rule: 'var(--teal-400)',  fg: 'var(--teal-700)',  glyph: '💡' },
-    rule:    { bg: 'var(--paper-deep)', rule: 'var(--ink)',      fg: 'var(--ink-2)',     glyph: '♟' },
+    rule: { bg: 'var(--callout-rule-bg, var(--paper-deep))', rule: 'var(--callout-rule-strip, var(--ink))', fg: 'var(--callout-rule-fg, var(--ink-2))',     glyph: '♟' },
     warning: { bg: 'var(--clay-100)',  rule: 'var(--clay-400)',  fg: 'var(--clay-600)',  glyph: '!' },
-    fun:     { bg: 'var(--amber-100)', rule: 'var(--amber-400)', fg: 'var(--amber-700)', glyph: '★' },
+    fun: { bg: 'var(--callout-fun-bg, var(--amber-100))', rule: 'var(--amber-400)', fg: 'var(--amber-700)', glyph: '★' },
   };
   const t = tones[tone] || tones.tip;
 
@@ -55,7 +55,7 @@ export function Callout({
             marginBottom: '2px',
           }}>{title}</div>
         )}
-        <div style={{ font: `var(--fw-regular) var(--text-sm)/1.5 var(--font-body)`, color: 'var(--ink-2)' }}>
+        <div style={{ font: `var(--fw-regular) var(--text-sm)/1.5 var(--font-body)`, color: 'var(--callout-body, var(--ink-2))' }}>
           {children}
         </div>
       </div>

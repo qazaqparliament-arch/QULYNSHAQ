@@ -475,10 +475,7 @@ function Callout({
       fg: 'var(--teal-700)',
       glyph: '💡'
     },
-    rule: {
-      bg: 'var(--paper-deep)',
-      rule: 'var(--ink)',
-      fg: 'var(--ink-2)',
+    rule: { bg: 'var(--callout-rule-bg, var(--paper-deep))', rule: 'var(--callout-rule-strip, var(--ink))', fg: 'var(--callout-rule-fg, var(--ink-2))',
       glyph: '♟'
     },
     warning: {
@@ -487,8 +484,7 @@ function Callout({
       fg: 'var(--clay-600)',
       glyph: '!'
     },
-    fun: {
-      bg: 'var(--amber-100)',
+    fun: { bg: 'var(--callout-fun-bg, var(--amber-100))',
       rule: 'var(--amber-400)',
       fg: 'var(--amber-700)',
       glyph: '★'
@@ -528,7 +524,7 @@ function Callout({
   }, title), /*#__PURE__*/React.createElement("div", {
     style: {
       font: `var(--fw-regular) var(--text-sm)/1.5 var(--font-body)`,
-      color: 'var(--ink-2)'
+      color: 'var(--callout-body, var(--ink-2))'
     }
   }, children)));
 }
