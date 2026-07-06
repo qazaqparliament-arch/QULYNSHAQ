@@ -12,7 +12,7 @@ function Header({ route, onNav, mobile }) {
       position: 'sticky', top: 0, zIndex: 20,
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       gap: 16, padding: mobile ? '12px 16px' : '14px 28px',
-      background: 'rgba(245,238,221,0.86)', backdropFilter: 'blur(8px)',
+      background: 'var(--header-bg, rgba(245,238,221,0.86))', backdropFilter: 'blur(8px)',
       borderBottom: '2px solid var(--line)',
     }}>
       <button onClick={() => onNav('home')} style={{
@@ -43,15 +43,15 @@ function Header({ route, onNav, mobile }) {
 function Footer() {
   return (
     <footer style={{
-      background: 'var(--ink)', color: 'var(--paper)', padding: '40px 28px 30px',
+      background: 'var(--footer-bg, var(--ink))', color: 'var(--footer-link, var(--paper))', padding: '40px 28px 30px',
     }}>
       <div style={{ maxWidth: 'var(--container)', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ maxWidth: 320 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 24 }}>♞</span>
-            <span style={{ font: 'var(--fw-black) 22px var(--font-display)', color: 'var(--paper-hi)' }}>Кулыншақ</span>
+            <span style={{ font: 'var(--fw-black) 22px var(--font-display)', color: 'var(--footer-title, var(--paper-hi))' }}>Кулыншақ</span>
           </div>
-          <p style={{ color: 'var(--ink-4)', fontSize: 14, marginTop: 10, lineHeight: 1.6 }}>
+          <p style={{ color: 'var(--footer-dim, var(--ink-4))', fontSize: 14, marginTop: 10, lineHeight: 1.6 }}>
             Балаға шахматты үйрететін құрастырмалы қорап. Әр сабақта — QR арқылы видео.
           </p>
         </div>
@@ -61,7 +61,7 @@ function Footer() {
           <FooterCol title="Байланыс" items={['WhatsApp', 'Instagram', 'YouTube']} />
         </div>
       </div>
-      <div style={{ maxWidth: 'var(--container)', margin: '26px auto 0', paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.12)', color: 'var(--ink-4)', fontSize: 13, fontFamily: 'var(--font-mono)' }}>
+      <div style={{ maxWidth: 'var(--container)', margin: '26px auto 0', paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.12)', color: 'var(--footer-dim, var(--ink-4))', fontSize: 13, fontFamily: 'var(--font-mono)' }}>
         © 2026 Кулыншақ · Қазақстанда жасалған
       </div>
     </footer>
@@ -73,7 +73,7 @@ function FooterCol({ title, items }) {
     <div>
       <div style={{ font: 'var(--fw-bold) 13px var(--font-display)', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--amber-400)', marginBottom: 10 }}>{title}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-        {items.map((t) => <a key={t} href="#" style={{ color: 'var(--paper)', textDecoration: 'none', fontSize: 14 }}>{t}</a>)}
+        {items.map((t) => <a key={t} href="#" style={{ color: 'var(--footer-link, var(--paper))', textDecoration: 'none', fontSize: 14 }}>{t}</a>)}
       </div>
     </div>
   );
