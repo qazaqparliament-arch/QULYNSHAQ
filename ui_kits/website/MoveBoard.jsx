@@ -148,10 +148,10 @@ function MoveBoard({ size = 8, cell = 46, piece = 'knight', origin = 'd4', moves
             </span>
           )}
           {coords && f === 0 && (
-            <span style={{ position: 'absolute', top: 2, left: 3, font: 'var(--fw-bold) 9px var(--font-mono)', color: dark ? 'var(--paper-hi)' : 'var(--ink-3)', opacity: 0.75 }}>{r + 1}</span>
+            <span style={{ position: 'absolute', top: 2, left: 3, font: 'var(--fw-bold) 9px var(--font-mono)', color: dark ? 'var(--coord-light, var(--paper-hi))' : 'var(--coord-dark, var(--ink-3))', opacity: 0.75 }}>{r + 1}</span>
           )}
           {coords && r === 0 && (
-            <span style={{ position: 'absolute', bottom: 1, right: 3, font: 'var(--fw-bold) 9px var(--font-mono)', color: dark ? 'var(--paper-hi)' : 'var(--ink-3)', opacity: 0.75 }}>{files[f]}</span>
+            <span style={{ position: 'absolute', bottom: 1, right: 3, font: 'var(--fw-bold) 9px var(--font-mono)', color: dark ? 'var(--coord-light, var(--paper-hi))' : 'var(--coord-dark, var(--ink-3))', opacity: 0.75 }}>{files[f]}</span>
           )}
         </div>
       );
@@ -189,7 +189,7 @@ function MoveBoard({ size = 8, cell = 46, piece = 'knight', origin = 'd4', moves
               }} />
               <span style={{
                 display: 'block', fontSize: cell * 0.88, lineHeight: 1, textAlign: 'center',
-                transform: 'rotateX(16deg)', color: 'var(--ink)',
+                transform: 'rotateX(16deg)', color: 'var(--piece-black, var(--ink))',
                 textShadow: `0 1px 0 #3a332c, 0 2px 0 #4a4136, 0 3px 1px #5c4e3f, 0 0 12px rgba(53,242,213,0.9), 0 0 26px rgba(53,242,213,0.5)`,
               }}>{MB_GLYPHS[piece] || '♟'}</span>
             </div>

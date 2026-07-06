@@ -18,7 +18,11 @@ function LessonCard({ lesson, onOpen, mobile }) {
       <div style={{ padding: 18 }}>
         <p style={{ fontSize: 15, color: 'var(--ink-2)', margin: 0, minHeight: 44 }}>{l.move}</p>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 14 }}>
-          <span style={{ font: 'var(--fw-bold) 13px var(--font-mono)', color: 'var(--ink-3)' }}>▶ {l.mins} мин видео</span>
+          {l.videoFree ? (
+            <span style={{ font: 'var(--fw-bold) 13px var(--font-mono)', color: 'var(--ink-3)' }}>▶ {l.mins} мин видео · тегін</span>
+          ) : (
+            <span style={{ font: 'var(--fw-bold) 13px var(--font-mono)', color: 'var(--ink-3)' }}>видео — қорапта · QR</span>
+          )}
           <Button variant="primary" size="sm" onClick={(e) => { e.stopPropagation(); onOpen(l); }}>Бастау</Button>
         </div>
       </div>
@@ -34,8 +38,9 @@ function LearnScreen({ onOpen, mobile }) {
         <div>
           <span className="ku-eyebrow">Оқу жолы</span>
           <h1 style={{ fontSize: mobile ? 34 : 46, margin: '8px 0 0' }}>Фигуралар мектебі</h1>
-          <p style={{ fontSize: 17, color: 'var(--ink-3)', marginTop: 6, maxWidth: 520 }}>
-            Әр фигураның өз сабағы бар. Ретімен жүр — оңайдан күрделіге.
+          <p style={{ fontSize: 17, color: 'var(--ink-3)', marginTop: 6, maxWidth: 560 }}>
+            Әр фигураның өз сабағы бар. Патша, Уәзір және Ат видеосы — осында, тегін.
+            Қалған сабақтардың видеосы қораптағы кітапшада — QR-мен ашылады.
           </p>
         </div>
         <div style={{ display: mobile ? 'none' : 'block' }}>

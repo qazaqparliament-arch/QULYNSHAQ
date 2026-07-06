@@ -68,16 +68,16 @@ function ChessPiece({
   const g = GLYPHS[type] || GLYPHS.knight;
   const glyph = g[color] || g.black;
   const discTones = {
-    brand: 'var(--amber-100)',
-    teal: 'var(--teal-100)',
-    paper: 'var(--surface)'
+    brand: 'var(--disc-brand, var(--amber-100))',
+    teal: 'var(--disc-teal, var(--teal-100))',
+    paper: 'var(--disc-paper, var(--surface))'
   };
   const glyphEl = /*#__PURE__*/React.createElement("span", {
     "aria-hidden": true,
     style: {
       fontSize: disc ? size * 0.62 : size,
       lineHeight: 1,
-      color: color === 'white' ? 'var(--paper-hi)' : 'var(--ink)',
+      color: color === 'white' ? 'var(--piece-white, var(--paper-hi))' : 'var(--piece-black, var(--ink))',
       textShadow: color === 'white' ? '0 0 1px var(--ink), 0 1px 0 rgba(33,29,26,0.35)' : 'none'
     }
   }, glyph);
@@ -198,7 +198,7 @@ function ChessBoard({
           top: 2,
           left: 3,
           font: 'var(--fw-bold) 9px var(--font-mono)',
-          color: dark ? 'var(--paper-hi)' : 'var(--ink-3)',
+          color: dark ? 'var(--coord-light, var(--paper-hi))' : 'var(--coord-dark, var(--ink-3))',
           opacity: 0.75
         }
       }, r + 1), coords && r === 0 && /*#__PURE__*/React.createElement("span", {
@@ -207,7 +207,7 @@ function ChessBoard({
           bottom: 1,
           right: 3,
           font: 'var(--fw-bold) 9px var(--font-mono)',
-          color: dark ? 'var(--paper-hi)' : 'var(--ink-3)',
+          color: dark ? 'var(--coord-light, var(--paper-hi))' : 'var(--coord-dark, var(--ink-3))',
           opacity: 0.75
         }
       }, files[f])));

@@ -2,7 +2,7 @@
 window.KU_DATA = {
   lessons: [
     {
-      n: 1, slug: 'rook', piece: 'rook', kk: 'Тұра', ru: 'Ладья', acc: 'тұраны',
+      n: 1, slug: 'rook', videoFree: false, piece: 'rook', kk: 'Тұра', ru: 'Ладья', acc: 'тұраны',
       move: 'Тік және көлденең — қалаған қашықтыққа.',
       level: 'Оңай', tone: 'olive', mins: 4,
       origin: 'd4',
@@ -10,7 +10,7 @@ window.KU_DATA = {
       rule: 'Тұра тек түзу сызықпен жүреді. Бұрышқа бұрыла алмайды.',
     },
     {
-      n: 2, slug: 'bishop', piece: 'bishop', kk: 'Піл', ru: 'Слон', acc: 'пілді',
+      n: 2, slug: 'bishop', videoFree: false, piece: 'bishop', kk: 'Піл', ru: 'Слон', acc: 'пілді',
       move: 'Тек қиғаш (диагональ) бойынша жүреді.',
       level: 'Оңай', tone: 'olive', mins: 4,
       origin: 'd4',
@@ -18,7 +18,7 @@ window.KU_DATA = {
       rule: 'Піл басынан аяғына дейін бір түсті шаршыда қалады.',
     },
     {
-      n: 3, slug: 'knight', piece: 'knight', kk: 'Ат', ru: 'Конь', acc: 'атты',
+      n: 3, slug: 'knight', videoFree: true, piece: 'knight', kk: 'Ат', ru: 'Конь', acc: 'атты',
       move: '«Г» әрпімен секіреді — басқа фигуралардан аттап өтеді.',
       level: 'Орта', tone: 'teal', mins: 6,
       origin: 'd4',
@@ -26,7 +26,7 @@ window.KU_DATA = {
       rule: 'Ат — жалғыз секіретін фигура. Ол тұлпардай аттап өтеді!',
     },
     {
-      n: 4, slug: 'queen', piece: 'queen', kk: 'Уәзір', ru: 'Ферзь', acc: 'уәзірді',
+      n: 4, slug: 'queen', videoFree: true, piece: 'queen', kk: 'Уәзір', ru: 'Ферзь', acc: 'уәзірді',
       move: 'Барлық бағытта — тұра мен пілді қосқандай.',
       level: 'Орта', tone: 'teal', mins: 6,
       origin: 'd4',
@@ -34,7 +34,7 @@ window.KU_DATA = {
       rule: 'Уәзір — ең күшті фигура. Оны абайлап қолдан!',
     },
     {
-      n: 5, slug: 'king', piece: 'king', kk: 'Патша', ru: 'Король', acc: 'патшаны',
+      n: 5, slug: 'king', videoFree: true, piece: 'king', kk: 'Патша', ru: 'Король', acc: 'патшаны',
       move: 'Кез келген бағытта, бірақ бір ғана қадам.',
       level: 'Күрделі', tone: 'clay', mins: 7,
       origin: 'd4',
@@ -42,7 +42,7 @@ window.KU_DATA = {
       rule: 'Патшаны қорға! Оны жоғалтсаң — ойын бітеді.',
     },
     {
-      n: 6, slug: 'pawn', piece: 'pawn', kk: 'Сарбаз', ru: 'Пешка', acc: 'сарбазды',
+      n: 6, slug: 'pawn', videoFree: false, piece: 'pawn', kk: 'Сарбаз', ru: 'Пешка', acc: 'сарбазды',
       move: 'Алға жүреді, қиғаш ұрады. Соңына жетсе — уәзірге айналады.',
       level: 'Күрделі', tone: 'clay', mins: 7,
       origin: 'd2',

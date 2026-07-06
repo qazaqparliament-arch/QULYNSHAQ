@@ -57,10 +57,10 @@ export function ChessBoard({
           )}
           {p && <ChessPiece type={p.type} color={p.color} size={cell * 0.74} />}
           {coords && f === 0 && (
-            <span style={{ position: 'absolute', top: 2, left: 3, font: 'var(--fw-bold) 9px var(--font-mono)', color: dark ? 'var(--paper-hi)' : 'var(--ink-3)', opacity: 0.75 }}>{r + 1}</span>
+            <span style={{ position: 'absolute', top: 2, left: 3, font: 'var(--fw-bold) 9px var(--font-mono)', color: dark ? 'var(--coord-light, var(--paper-hi))' : 'var(--coord-dark, var(--ink-3))', opacity: 0.75 }}>{r + 1}</span>
           )}
           {coords && r === 0 && (
-            <span style={{ position: 'absolute', bottom: 1, right: 3, font: 'var(--fw-bold) 9px var(--font-mono)', color: dark ? 'var(--paper-hi)' : 'var(--ink-3)', opacity: 0.75 }}>{files[f]}</span>
+            <span style={{ position: 'absolute', bottom: 1, right: 3, font: 'var(--fw-bold) 9px var(--font-mono)', color: dark ? 'var(--coord-light, var(--paper-hi))' : 'var(--coord-dark, var(--ink-3))', opacity: 0.75 }}>{files[f]}</span>
           )}
         </div>
       );

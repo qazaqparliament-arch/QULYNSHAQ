@@ -25,6 +25,33 @@ function VideoPlayer({ lesson, mobile }) {
   );
 }
 
+// Видеосы қорапта ашылатын сабақтар үшін: кейс ішінде не бар — шолу видеосы
+function BoxPeekVideo({ mobile }) {
+  const [playing, setPlaying] = React.useState(false);
+  return (
+    <div style={{
+      position: 'relative', aspectRatio: '16 / 9', borderRadius: 'var(--radius-xl)', overflow: 'hidden',
+      background: 'linear-gradient(150deg, #55705C, #37473C)', border: '3px solid var(--ink)',
+      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12,
+    }}>
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.14, backgroundImage: 'radial-gradient(#F5EEDA 1.5px, transparent 1.5px)', backgroundSize: '22px 22px' }} />
+      <div style={{ position: 'relative', font: `var(--fw-black) ${mobile ? 19 : 26}px var(--font-display)`, color: '#F5EEDA', textAlign: 'center', padding: '0 16px' }}>
+        Қорап ішінде не бар?
+      </div>
+      <button onClick={() => setPlaying(!playing)} style={{
+        position: 'relative', width: mobile ? 62 : 78, height: mobile ? 62 : 78, borderRadius: '50%',
+        background: 'var(--clay-400)', color: '#FCF8EF', border: '4px solid #FCF8EF',
+        boxShadow: 'var(--shadow-lg)', cursor: 'pointer', fontSize: mobile ? 24 : 30, paddingLeft: playing ? 0 : 5,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>{playing ? '❚❚' : '▶'}</button>
+      <div style={{ position: 'absolute', bottom: 12, left: 14, display: 'flex', gap: 8, alignItems: 'center' }}>
+        <Badge tone="ink">видео шолу</Badge>
+        <span style={{ color: '#F5EEDA', font: 'var(--fw-bold) 13px var(--font-mono)', opacity: 0.85 }}>YouTube · Кулыншақ</span>
+      </div>
+    </div>
+  );
+}
+
 function LessonScreen({ lesson, onNav, onOpen, mobile }) {
   const lessons = window.KU_DATA.lessons;
   const l = lesson || lessons[2];
@@ -88,10 +115,23 @@ function LessonScreen({ lesson, onNav, onOpen, mobile }) {
       <p style={{ fontSize: mobile ? 17 : 20, color: 'var(--ink-2)', maxWidth: 640, marginTop: 6 }}>{l.move}</p>
 
       <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1.3fr 0.7fr', gap: 24, marginTop: 22, alignItems: 'start' }}>
-        <VideoPlayer lesson={l} mobile={mobile} />
+        {l.videoFree ? <VideoPlayer lesson={l} mobile={mobile} /> : <BoxPeekVideo mobile={mobile} />}
         <Card variant="cut" pad="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-          <div style={{ font: 'var(--fw-bold) 15px var(--font-display)', color: 'var(--ink-2)', textAlign: 'center' }}>Телефоннан қара</div>
-          <QRTag seed={'lesson-' + l.slug} caption={l.kk + ' — видео сабақ'} size={mobile ? 130 : 150} />
+          {l.videoFree ? (
+            <React.Fragment>
+              <div style={{ font: 'var(--fw-bold) 15px var(--font-display)', color: 'var(--ink-2)', textAlign: 'center' }}>Телефоннан қара</div>
+              <QRTag seed={'lesson-' + l.slug} caption={l.kk + ' — видео сабақ'} size={mobile ? 130 : 150} />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <div style={{ font: 'var(--fw-bold) 15px var(--font-display)', color: 'var(--ink-2)', textAlign: 'center' }}>Толық сабақ — қорапта</div>
+              <QRTag seed={'booklet-' + l.slug} caption="Кітапшадағы QR" size={mobile ? 120 : 140} />
+              <p style={{ fontSize: 13, color: 'var(--ink-3)', textAlign: 'center', margin: 0, lineHeight: 1.5 }}>
+                {l.kk} сабағының толық видеосы қораптағы кітапшаның QR-кодымен ашылады.
+              </p>
+              <Button variant="accent" size="sm" onClick={() => onNav('order')}>Қорапты алу</Button>
+            </React.Fragment>
+          )}
         </Card>
       </div>
 

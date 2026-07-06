@@ -30,17 +30,17 @@ export function ChessPiece({
   const g = GLYPHS[type] || GLYPHS.knight;
   const glyph = g[color] || g.black;
   const discTones = {
-    brand: 'var(--amber-100)',
-    teal:  'var(--teal-100)',
-    paper: 'var(--surface)',
+    brand: 'var(--disc-brand, var(--amber-100))',
+    teal:  'var(--disc-teal, var(--teal-100))',
+    paper: 'var(--disc-paper, var(--surface))',
   };
 
   const glyphEl = (
     <span aria-hidden style={{
       fontSize: disc ? size * 0.62 : size,
       lineHeight: 1,
-      color: color === 'white' ? 'var(--paper-hi)' : 'var(--ink)',
-      textShadow: color === 'white' ? '0 0 1px var(--ink), 0 1px 0 rgba(33,29,26,0.35)' : 'none',
+      color: color === 'white' ? 'var(--piece-white, var(--paper-hi))' : 'var(--piece-black, var(--ink))',
+      textShadow: color === 'white' ? '0 0 1px var(--piece-black, var(--ink)), 0 1px 0 rgba(33,29,26,0.35)' : 'none',
     }}>{glyph}</span>
   );
 

@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Кулыншақ — Шахматты ойнап үйрен</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=003">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="_ds_bundle.js"></script>
+<script src="_ds_bundle.js?v=003"></script>
 <style>
   /* ҚАРАҢҒЫ ҚАБЫҚ: крем фон толық алынып, астында 3D фанера-шахмат көрінісі жатады.
      Түс токендері «шыны панель» палитрасына қайта анықталады. */
@@ -35,6 +35,13 @@
     --brand-soft: rgba(224, 180, 107, 0.14);
     --square-light: #EFE4C4;
     --square-dark: #4C6653;
+    --piece-black: #211D1A;
+    --piece-white: #FCF8EF;
+    --coord-light: #EFE4C4;
+    --coord-dark: #6E6046;
+    --disc-paper: #FCF8EF;
+    --disc-brand: #FBEBC9;
+    --disc-teal: #D6E7E7;
     --header-bg: rgba(20, 22, 25, 0.78);
     --footer-bg: rgba(14, 16, 18, 0.85);
     --footer-link: #EFE7D8;
@@ -70,14 +77,14 @@
 <div id="bg3d"></div>
 <div id="veil"></div>
 <div id="root"></div>
-<script src="bg3d.js"></script>
-<script src="ui_kits/website/data.js"></script>
-<script type="text/babel" src="ui_kits/website/Chrome.jsx" data-filename="Chrome.jsx"></script>
-<script type="text/babel" src="ui_kits/website/MoveBoard.jsx" data-filename="MoveBoard.jsx"></script>
-<script type="text/babel" src="ui_kits/website/HomeScreen.jsx" data-filename="HomeScreen.jsx"></script>
-<script type="text/babel" src="ui_kits/website/LearnScreen.jsx" data-filename="LearnScreen.jsx"></script>
-<script type="text/babel" src="ui_kits/website/LessonScreen.jsx" data-filename="LessonScreen.jsx"></script>
-<script type="text/babel" src="ui_kits/website/AssemblyScreen.jsx" data-filename="AssemblyScreen.jsx"></script>
+<script src="bg3d.js?v=003"></script>
+<script src="ui_kits/website/data.js?v=003"></script>
+<script type="text/babel" src="ui_kits/website/Chrome.jsx?v=003" data-filename="Chrome.jsx"></script>
+<script type="text/babel" src="ui_kits/website/MoveBoard.jsx?v=003" data-filename="MoveBoard.jsx"></script>
+<script type="text/babel" src="ui_kits/website/HomeScreen.jsx?v=003" data-filename="HomeScreen.jsx"></script>
+<script type="text/babel" src="ui_kits/website/LearnScreen.jsx?v=003" data-filename="LearnScreen.jsx"></script>
+<script type="text/babel" src="ui_kits/website/LessonScreen.jsx?v=003" data-filename="LessonScreen.jsx"></script>
+<script type="text/babel" src="ui_kits/website/AssemblyScreen.jsx?v=003" data-filename="AssemblyScreen.jsx"></script>
 <script type="text/babel">
   const { useState, useEffect } = React;
 

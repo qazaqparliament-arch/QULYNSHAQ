@@ -237,7 +237,7 @@ function BoxArt({ mobile }) {
             <span key={i} ref={(el) => { pieceRefs.current[i] = el; }} style={{
               position: 'absolute', left: p.f * S, top: (8 - p.r) * S, width: S, height: S,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: S * 0.74, lineHeight: 1, color: 'var(--ink)', opacity: 0,
+              fontSize: S * 0.74, lineHeight: 1, color: 'var(--piece-black, var(--ink))', opacity: 0,
               transformOrigin: '50% 82%',
               textShadow: '0 1px 2px rgba(33,29,26,0.35)', pointerEvents: 'none', zIndex: 2,
             }}>{p.g}</span>
