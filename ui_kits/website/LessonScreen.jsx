@@ -142,7 +142,7 @@ function LessonScreen({ lesson, onNav, onOpen, mobile }) {
         <div>
           <h2 style={{ fontSize: mobile ? 24 : 30 }}>{l.kk} қалай жүреді?</h2>
           <Callout tone="rule" title="Ереже" style={{ marginTop: 8 }}>{l.rule}</Callout>
-          <div style={{ marginTop: 16 }}>
+          <div className="panel-light" style={{ marginTop: 16, background: 'var(--panel-light-bg, transparent)', borderRadius: 'var(--radius-xl)', padding: 'var(--panel-light-pad, 0px)' }}>
             <StepList steps={[
               { title: 'Фигураны қой', body: l.origin.toUpperCase() + ' шаршысына ' + (l.acc || l.kk.toLowerCase() + 'ды') + ' орналастыр.' },
               { title: 'Мүмкін жүрістер', body: 'Қызыл нүктелер — фигура жүре алатын шаршылар.' },

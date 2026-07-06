@@ -17,7 +17,7 @@ function Hero({ onNav, mobile }) {
           <h1 style={{ fontSize: mobile ? 40 : 62, margin: '10px 0 0', color: 'var(--ink)' }}>
             Шахматты<br />ойнап үйрен
           </h1>
-          <p style={{ fontSize: mobile ? 17 : 20, color: 'var(--ink-2)', maxWidth: 460, marginTop: 14 }}>
+          <p style={{ fontSize: mobile ? 17 : 20, color: 'var(--hero-note-ink, var(--ink-2))', maxWidth: 460, marginTop: 14, background: 'var(--hero-note-bg, transparent)', borderRadius: 'var(--radius-lg)', padding: 'var(--hero-note-pad, 0px)' }}>
             Құлыншақ — өзің құрастыратын шахмат қорабы. Фигураларды жина, стикерлерін жапсыр, әр сабақтың QR-ын сканерлеп видеодан үйрен.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 24, flexWrap: 'wrap' }}>
@@ -46,8 +46,8 @@ function Hero({ onNav, mobile }) {
 function Stat({ n, label }) {
   return (
     <div>
-      <div style={{ font: 'var(--fw-black) 30px var(--font-display)', color: 'var(--clay-500)' }}>{n}</div>
-      <div style={{ fontSize: 13, color: 'var(--ink-3)', fontWeight: 600 }}>{label}</div>
+      <div style={{ font: 'var(--fw-black) 30px var(--font-display)', color: 'var(--stat-color, var(--clay-500))', textShadow: 'var(--stat-glow, none)' }}>{n}</div>
+      <div style={{ fontSize: 13, color: 'var(--stat-label, var(--ink-3))', fontWeight: 600 }}>{label}</div>
     </div>
   );
 }
