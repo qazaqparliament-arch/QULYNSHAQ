@@ -295,7 +295,7 @@ function BoxArt({ mobile }) {
 
 function WhatsInside({ mobile }) {
   const items = [
-    { icon: '♟', t: 'Құрастырмалы фигуралар', d: 'Ағаш фанер қиындыларын жинап, фигура жаса: 3 деталь + 5 стикер.' },
+    { icon: '♟', t: 'Құрастырмалы фигуралар', d: 'Ағаш фанер қиындыларын жинап, фигура жаса: 3 деталь + 5 стикер.', href: 'fanera-3d.html', cta: '3D көру →' },
     { icon: '★', t: 'Стикер пак', d: 'Әр фигураға өз стикерін жапсыр — өзіңдікі болады.' },
     { icon: '📖', t: 'Кітап-нұсқаулық', d: 'Қалай құрастыру, қалай ойнау — қадам-қадаммен.' },
     { icon: '▶', t: 'QR видео сабақтар', d: 'Сканерле — YouTube-тағы видео сабақ ашылады.' },
@@ -308,10 +308,15 @@ function WhatsInside({ mobile }) {
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : 'repeat(4, 1fr)', gap: 16 }}>
         {items.map((it) => (
-          <Card key={it.t} variant="paper" pad="md" interactive>
+          <Card key={it.t} variant="paper" pad="md" interactive
+            onClick={it.href ? () => window.open(it.href, '_blank') : undefined}
+            style={it.href ? { cursor: 'pointer' } : undefined}>
             <div style={{ fontSize: 30, marginBottom: 8 }}>{it.icon}</div>
             <div style={{ font: 'var(--fw-bold) 18px var(--font-display)', color: 'var(--ink)' }}>{it.t}</div>
             <div style={{ fontSize: 14, color: 'var(--ink-3)', marginTop: 4, lineHeight: 1.5 }}>{it.d}</div>
+            {it.cta && (
+              <div style={{ marginTop: 10, font: 'var(--fw-black) 14px var(--font-display)', color: 'var(--amber-400)' }}>{it.cta}</div>
+            )}
           </Card>
         ))}
       </div>
