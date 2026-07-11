@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Фанер Шахматы · AR</title>
+<title>Құлыншақ · AR сканер</title>
 <style>
-  :root{ --neon:#4ff0c0; --wood:#e2cea4; --ink:#2b2016; }
+  :root{ --neon:#35f2d5; --wood:#e2cea4; }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%;background:#0d0d10;color:#eee;font-family:-apple-system,Segoe UI,Roboto,sans-serif;overflow:hidden}
   #ar{position:fixed;inset:0}
   #ar canvas,#ar video{width:100%!important;height:100%!important;object-fit:cover}
-  .center{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;z-index:20}
+  .center{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;z-index:20;background:#0d0d10}
   #start h1{font-size:26px;letter-spacing:2px;margin:0 0 6px}
   #start p{opacity:.75;max-width:440px;line-height:1.5;font-size:15px}
   button.cta{margin-top:22px;background:var(--neon);color:#06231c;border:0;border-radius:40px;
-    padding:15px 34px;font-size:17px;font-weight:700;letter-spacing:.5px;box-shadow:0 0 24px rgba(79,240,192,.5)}
+    padding:15px 34px;font-size:17px;font-weight:700;letter-spacing:.5px;box-shadow:0 0 24px rgba(53,242,213,.5);cursor:pointer}
   button.cta:active{transform:scale(.97)}
   #hint{position:fixed;left:0;right:0;bottom:26px;text-align:center;z-index:15;pointer-events:none;
     font-size:14px;opacity:.85;transition:opacity .3s}
   #label{position:fixed;left:50%;top:22px;transform:translateX(-50%);z-index:15;
-    background:rgba(10,14,12,.72);backdrop-filter:blur(6px);border:1px solid rgba(79,240,192,.4);
+    background:rgba(10,14,12,.72);backdrop-filter:blur(6px);border:1px solid rgba(53,242,213,.4);
     border-radius:14px;padding:10px 18px;text-align:center;opacity:0;transition:opacity .35s;pointer-events:none;max-width:90vw}
   #label b{color:var(--neon);font-size:17px;letter-spacing:1px}
   #label span{display:block;opacity:.85;font-size:13px;margin-top:3px}
@@ -36,10 +36,10 @@
 <div id="hint" class="hidden">Кітаптағы фигура суретіне камераны бағыттаңыз</div>
 
 <div class="center" id="start">
-  <h1>ФАНЕР ШАХМАТЫ · AR</h1>
-  <p>Кітаптағы фигура суретін телефон камерасымен сканерлеңіз — 3D фигура мен оның жүріс бағыттары неон болып жанып тұрады. Телефонды айналдырып, жан-жағынан қараңыз.</p>
+  <h1>ҚҰЛЫНШАҚ · AR</h1>
+  <p>Кітаптағы фигура суретін телефон камерасымен сканерлеңіз — нағыз фанер фигура шахмат тақтасында пайда болып, жүріс бағыттары неон стрелкалармен жанып тұрады. Телефонды айналдырып, жан-жағынан қараңыз.</p>
   <button class="cta" id="startBtn">Сканерлеуді бастау</button>
-  <p style="font-size:12px;margin-top:18px;opacity:.5">Камераға рұқсат сұралады. iPhone → Safari, Android → Chrome.</p>
+  <p style="font-size:12.5px;opacity:.55;margin-top:14px">Камераға рұқсат сұралады. iPhone → Safari, Android → Chrome.</p>
 </div>
 
 <script type="importmap">
@@ -49,178 +49,102 @@
   "mindar-image-three": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"
 }}
 </script>
-
 <script type="module">
 import * as THREE from 'three';
-import { MindARThree } from 'mindar-image-three';
+import { ORDER, INFO, buildScene, pulseMoves } from './scene.js';
 
-/* ---------- фигура деректері (маркер ретімен: 0..5) ---------- */
-const PIECES = [
-  { key:'king',   name:'Патша',  rule:'Кез келген бағытта 1 шаршы' },
-  { key:'queen',  name:'Уәзір',  rule:'Түзу және диагональ — шектеусіз' },
-  { key:'bishop', name:'Піл',    rule:'Тек диагональ бойымен' },
-  { key:'knight', name:'Ат',     rule:'Г-тәрізді секіріс (2+1)' },
-  { key:'rook',   name:'Тура',   rule:'Тік және көлденең түзу' },
-  { key:'pawn',   name:'Сарбаз', rule:'Алға 1 (алғашқыда 2), кесе-көлденең соғады' },
-];
+const label = document.getElementById('label');
+const lname = document.getElementById('lname');
+const lrule = document.getElementById('lrule');
+const frame = document.getElementById('frame');
+const hint = document.getElementById('hint');
+const startScreen = document.getElementById('start');
+const startBtn = document.getElementById('startBtn');
 
-/* ---------- фанер материалы (процедуралық ағаш текстурасы) ---------- */
-function woodTexture(){
-  const c=document.createElement('canvas'); c.width=c.height=256; const x=c.getContext('2d');
-  x.fillStyle='#e2cea4'; x.fillRect(0,0,256,256);
-  for(let i=0;i<256;i+=2){
-    const v=200+Math.floor(Math.random()*30)-15;
-    x.strokeStyle=`rgb(${v-20},${v-45},${v-95})`; x.globalAlpha=.35;
-    x.beginPath(); x.moveTo(0,i+Math.sin(i*0.3)*2); x.lineTo(256,i); x.stroke();
-  }
-  x.globalAlpha=1;
-  const t=new THREE.CanvasTexture(c); t.wrapS=t.wrapT=THREE.RepeatWrapping; return t;
-}
-const faceTex=woodTexture();
-const faceMat=new THREE.MeshStandardMaterial({map:faceTex,roughness:.8,metalness:.05});
-const edgeMat=new THREE.MeshStandardMaterial({color:0xcaa76a,roughness:.9}); // жиегі — ашық фанер
-
-/* ---------- жарты силуэт профильдері (оң жақ, төменнен жоғары) ---------- */
-const PROFILES = {
-  pawn:   [[.30,0],[.27,.05],[.13,.13],[.11,.46],[.17,.55],[.20,.63],[.13,.73],[.09,.80],[0,.95]],
-  rook:   [[.34,0],[.30,.06],[.15,.14],[.13,.60],[.20,.66],[.22,.72],[.22,.86],[.15,.86],[.15,.94],[.10,.94],[.10,.86],[0,.86]],
-  bishop: [[.32,0],[.28,.06],[.13,.14],[.11,.55],[.16,.66],[.20,.78],[.13,.92],[.08,1.0],[0,1.10]],
-  knight: [[.34,0],[.30,.06],[.15,.14],[.14,.42],[.30,.55],[.34,.72],[.26,.80],[.34,.92],[.10,.98],[-.10,.86],[-.12,.62],[0,.55]],
-  queen:  [[.34,0],[.30,.06],[.14,.14],[.12,.55],[.18,.66],[.22,.78],[.16,.90],[.24,.98],[.10,1.06],[0,1.18]],
-  king:   [[.34,0],[.30,.06],[.14,.14],[.12,.55],[.18,.66],[.24,.80],[.15,.92],[.15,1.02],[.07,1.02],[.07,1.10],[.15,1.10],[.15,1.18],[.07,1.18],[.07,1.28],[0,1.28]],
-};
-
-function buildProfileShape(half){
-  const s=new THREE.Shape();
-  s.moveTo(half[0][0],half[0][1]);
-  for(let i=1;i<half.length;i++) s.lineTo(half[i][0],half[i][1]);
-  for(let i=half.length-1;i>=0;i--) s.lineTo(-half[i][0],half[i][1]); // айна
-  s.lineTo(half[0][0],half[0][1]);
-  return s;
+function addLights(scene) {
+  scene.add(new THREE.HemisphereLight(0xfff0d8, 0x3a2c1c, 1.15));
+  const dir = new THREE.DirectionalLight(0xfff2df, 1.2);
+  dir.position.set(1, 2.4, 1.6);
+  scene.add(dir);
 }
 
-function makePiece(key){
-  const g=new THREE.Group();
-  const half=PROFILES[key];
-  const shape=buildProfileShape(half);
-  const geo=new THREE.ExtrudeGeometry(shape,{depth:0.04,bevelEnabled:false});
-  geo.translate(0,0,-0.02);
-  // қиылысқан 2 силуэт
-  const a=new THREE.Mesh(geo,[faceMat,edgeMat]);
-  const b=new THREE.Mesh(geo,[faceMat,edgeMat]); b.rotation.y=Math.PI/2;
-  g.add(a,b);
-  // дөңгелек тұғыр (Ø31мм)
-  const base=new THREE.Mesh(new THREE.CylinderGeometry(0.34,0.34,0.05,40),edgeMat);
-  base.position.y=0.025; g.add(base);
-  const baseTop=new THREE.Mesh(new THREE.CylinderGeometry(0.335,0.335,0.008,40),faceMat);
-  baseTop.position.y=0.054; g.add(baseTop);
-  g.scale.setScalar(0.9);
-  return g;
-}
-
-/* ---------- неон жүріс сызықтары ---------- */
-const NEON=0x4ff0c0;
-function neonLine(points){
-  const grp=new THREE.Group();
-  const geo=new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(p[0],0.015,p[1])));
-  const core=new THREE.Line(geo,new THREE.LineBasicMaterial({color:NEON,transparent:true,opacity:1}));
-  const glow=new THREE.Line(geo,new THREE.LineBasicMaterial({color:NEON,transparent:true,opacity:.28}));
-  grp.add(glow,core); grp.userData.core=core; grp.userData.glow=glow;
-  return grp;
-}
-function dot(x,z,r=0.05){
-  const m=new THREE.Mesh(new THREE.SphereGeometry(r,16,16),
-    new THREE.MeshBasicMaterial({color:NEON}));
-  m.position.set(x,0.02,z); return m;
-}
-const U=0.62; // бір шаршы = 0.62 бірлік
-function ray(dx,dz,n){ const p=[[0,0]]; for(let i=1;i<=n;i++)p.push([dx*U*i,dz*U*i]); return p; }
-
-function makeMoves(key){
-  const grp=new THREE.Group();
-  const add=(pts)=>grp.add(neonLine(pts));
-  const dirsOrtho=[[1,0],[-1,0],[0,1],[0,-1]];
-  const dirsDiag=[[1,1],[1,-1],[-1,1],[-1,-1]];
-  if(key==='rook'||key==='queen') dirsOrtho.forEach(d=>add(ray(d[0],d[1],3)));
-  if(key==='bishop'||key==='queen') dirsDiag.forEach(d=>add(ray(d[0],d[1],3)));
-  if(key==='king') [...dirsOrtho,...dirsDiag].forEach(d=>{add(ray(d[0],d[1],1));grp.add(dot(d[0]*U,d[1]*U,.045));});
-  if(key==='knight'){
-    const L=[[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]];
-    L.forEach(([a,b])=>{
-      const midx=Math.abs(a)>Math.abs(b)?[a,0]:[0,b];
-      add([[0,0],[midx[0]*U,midx[1]*U],[a*U,b*U]]);
-      grp.add(dot(a*U,b*U,.055));
-    });
-  }
-  if(key==='pawn'){
-    add(ray(0,1,2)); grp.add(dot(0,U,.05)); grp.add(dot(0,2*U,.05));
-    add([[0,0],[U,U]]); add([[0,0],[-U,U]]);
-    grp.add(dot(U,U,.05)); grp.add(dot(-U,U,.05));
-  }
-  return grp;
-}
-
-/* ---------- MindAR орнату ---------- */
-let mindar, running=false;
-const startBtn=document.getElementById('startBtn');
-const startScreen=document.getElementById('start');
-const label=document.getElementById('label');
-const frame=document.getElementById('frame');
-const hint=document.getElementById('hint');
-const anims=[];
-
-async function start(){
-  startBtn.disabled=true; startBtn.textContent='Камера қосылуда…';
-  mindar=new MindARThree({
-    container:document.getElementById('ar'),
-    imageTargetSrc:'./assets/targets.mind',
-    maxTrack:1,
-    uiScanning:false, uiLoading:false, uiError:false
-  });
-  const {renderer,scene,camera}=mindar;
-  scene.add(new THREE.HemisphereLight(0xffffff,0x554433,1.1));
-  const dir=new THREE.DirectionalLight(0xffffff,1.0); dir.position.set(1,2,2); scene.add(dir);
-
-  PIECES.forEach((p,i)=>{
-    const anchor=mindar.addAnchor(i);
-    const content=new THREE.Group();
-    content.rotation.x=-Math.PI/2;   // фигура беттен тік көтерілсін
-    const piece=makePiece(p.key);
-    const moves=makeMoves(p.key);
-    content.add(moves); content.add(piece);
-    anchor.group.add(content);
-    anims.push({moves,piece});
-    anchor.onTargetFound=()=>{
-      label.querySelector('#lname').textContent=p.name;
-      label.querySelector('#lrule').textContent=p.rule;
-      label.style.opacity=1; frame.style.opacity=0; hint.style.opacity=0;
-    };
-    anchor.onTargetLost=()=>{ label.style.opacity=0; frame.style.opacity=.9; hint.style.opacity=.85; };
-  });
-
-  await mindar.start();
-  running=true;
+/* ---------- Алдын ала қарау режимі: /ar/?piece=knight (камерасыз) ---------- */
+const dbgPiece = new URLSearchParams(location.search).get('piece');
+if (dbgPiece && ORDER.includes(dbgPiece)) {
   startScreen.classList.add('hidden');
-  frame.classList.remove('hidden'); hint.classList.remove('hidden');
-
-  const clock=new THREE.Clock();
-  renderer.setAnimationLoop(()=>{
-    const t=clock.getElapsedTime();
-    const pulse=0.55+0.45*Math.sin(t*3.2);
-    anims.forEach(a=>{
-      a.moves.traverse(o=>{ if(o.material&&o.material.color&&o.type==='Line'){
-        o.material.opacity=(o.material===o.parent.userData.glow)?0.15+0.2*pulse:0.6+0.4*pulse;
-      }});
-      a.piece.rotation.z=Math.sin(t*0.6)*0.05; // (жергілікті) жеңіл тербеліс
-    });
-    renderer.render(scene,camera);
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  document.getElementById('ar').appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x14161a);
+  const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.05, 50);
+  addLights(scene);
+  const content = buildScene(dbgPiece);
+  scene.add(content);
+  lname.textContent = INFO[dbgPiece].name;
+  lrule.textContent = INFO[dbgPiece].rule;
+  label.style.opacity = 1;
+  const clock = new THREE.Clock();
+  renderer.setAnimationLoop(() => {
+    const t = clock.getElapsedTime();
+    const th = t * 0.5;
+    camera.position.set(Math.sin(th) * 2.3, 1.7, Math.cos(th) * 2.3);
+    camera.lookAt(0, 0.35, 0);
+    pulseMoves(content, t);
+    renderer.render(scene, camera);
+  });
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
   });
 }
 
-startBtn.addEventListener('click',()=>{
-  start().catch(e=>{
-    startBtn.disabled=false; startBtn.textContent='Қайта көру';
-    alert('Камераны қосу мүмкін болмады: '+e.message+'\nБет https:// арқылы ашылғанын тексеріңіз.');
+/* ---------- AR режимі (MindAR) ---------- */
+async function startAR() {
+  const { MindARThree } = await import('mindar-image-three');
+  const mindar = new MindARThree({
+    container: document.getElementById('ar'),
+    imageTargetSrc: './assets/targets.mind',
+    maxTrack: 1,
+    uiScanning: false, uiLoading: false, uiError: false,
+  });
+  const { renderer, scene, camera } = mindar;
+  addLights(scene);
+  const groups = [];
+  ORDER.forEach((key, i) => {
+    const anchor = mindar.addAnchor(i);
+    const content = new THREE.Group();
+    content.rotation.x = Math.PI / 2;   // Y-up көрініс → маркер бетінен тік көтеріледі
+    content.add(buildScene(key));
+    anchor.group.add(content);
+    groups.push(content);
+    anchor.onTargetFound = () => {
+      lname.textContent = INFO[key].name;
+      lrule.textContent = INFO[key].rule;
+      label.style.opacity = 1; frame.style.opacity = 0; hint.style.opacity = 0;
+    };
+    anchor.onTargetLost = () => {
+      label.style.opacity = 0; frame.style.opacity = .9; hint.style.opacity = .85;
+    };
+  });
+  await mindar.start();
+  startScreen.classList.add('hidden');
+  frame.classList.remove('hidden');
+  hint.classList.remove('hidden');
+  const clock = new THREE.Clock();
+  renderer.setAnimationLoop(() => {
+    const t = clock.getElapsedTime();
+    groups.forEach((g) => pulseMoves(g, t));
+    renderer.render(scene, camera);
+  });
+}
+
+startBtn.addEventListener('click', () => {
+  startBtn.disabled = true; startBtn.textContent = 'Камера қосылуда…';
+  startAR().catch((e) => {
+    startBtn.disabled = false; startBtn.textContent = 'Қайта көру';
+    alert('Камераны қосу мүмкін болмады: ' + e.message + '\nБет https:// арқылы ашылғанын тексеріңіз.');
   });
 });
 </script>
