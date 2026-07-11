@@ -23,6 +23,7 @@ function Hero({ onNav, mobile }) {
           <div style={{ display: 'flex', gap: 12, marginTop: 24, flexWrap: 'wrap' }}>
             <Button variant="primary" size="lg" onClick={() => onNav('order')} iconRight={<span>♞</span>}>Қорапты алу</Button>
             <Button variant="outline" size="lg" onClick={() => onNav('learn')}>Сабақтарды көру</Button>
+            <Button variant="secondary" size="lg" onClick={() => window.open('ar/', '_blank')} iconLeft={<span>📷</span>}>AR сканерлеу</Button>
           </div>
           <div style={{ display: 'flex', gap: 20, marginTop: 26, flexWrap: 'wrap' }}>
             <Stat n="13" label="видео сабақ" />
